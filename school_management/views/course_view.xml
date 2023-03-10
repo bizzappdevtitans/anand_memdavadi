@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="school_management_menu_course"
+         name="Courses"
+         parent="school_management_root"
+         action="action_school_course"
+         groups="group_school_student,group_school_teacher"/>
+
+    <record id="action_school_course"
+            model="ir.actions.act_window">
+            <field name="name">Courses</field>
+            <field name="res_model">school.course</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create course record
+                </p>
+            </field>
+    </record>
+
+    <record id="view_course_form" model="ir.ui.view">
+            <field name="name">school.course.form</field>
+            <field name="model">school.course</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <widget name="web_ribbon" text="Course" bg_color="bg-danger" />
+                    <group>
+                        <field name="image" widget="image" options="{'size': [550, 320]}" class="oe_avatar"/>
+                        <field name="stream"/>
+                        <group>
+                            <field name="student_details"/>
+                        </group>
+                        <field name="sub"/>
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+    </record>
+
+    <record id="view_course_tree" model="ir.ui.view">
+        <field name="name">school.course.tree</field>
+        <field name="model">school.course</field>
+        <field name="arch" type="xml">
+        <tree>
+            <field name="image" widget="image" options="{'size': [150, 120]}"/>
+            <field name="stream" string="Course"/>
+            <field name="sub"/>
+            <field name="student_details" optional="hide"/>
+        </tree>
+        </field>
+    </record>
+</odoo>
+

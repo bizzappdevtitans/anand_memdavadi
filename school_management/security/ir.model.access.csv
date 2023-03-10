@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+school_management.access_school_management,access_school_management,school_management.model_school_management,base.group_user,1,1,1,1
+school_management.access_school_student,access_school_student,school_management.model_school_student,base.group_user,1,1,1,1
+school_management.access_school_teacher,access_school_teacher,school_management.model_school_teacher,base.group_user,1,1,1,1
+school_management.access_school_principal,access_school_principal,school_management.model_school_principal,base.group_user,1,1,1,1
+school_management.access_school_course,access_school_course,school_management.model_school_course,base.group_user,1,1,1,1
+school_management.access_school_admission,access_school_admission,school_management.model_school_admission,base.group_user,1,1,1,1
+school_management.access_school_transport,access_school_transport,school_management.model_school_transport,base.group_user,1,1,1,1
+school_management.access_school_subject,access_school_subject,school_management.model_school_subject,base.group_user,1,1,1,1
+school_management.access_school_result,access_school_result,school_management.model_school_result,base.group_user,1,1,1,1
+school_management.access_school_manipulation,access_school_manipulation,school_management.model_school_manipulation,base.group_user,1,1,1,1
+school_management.access_school_wizard,access_school_wizard,school_management.model_school_wizard,base.group_user,1,1,1,1
+school_management.access_create_school,access_create_school,school_management.model_create_school,base.group_user,1,1,1,1
+school_management.access_update_teacher,access_update_teacher,school_management.model_update_teacher,base.group_user,1,1,1,1

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="school_management_menu_staff"
+         name="Staff"
+         parent="school_management_root"
+         sequence="1"/>
+
+    <menuitem id="school_management_wizard_menu"
+         name="Create School"
+         parent="school_management_menu_staff"
+         action="action_view_create_school_wizard"
+         groups="group_school_principal"
+         sequence="10"/>
+
+    <menuitem id="school_management_menu_teacher"
+         name="Teacher"
+         parent="school_management_menu_staff"
+         action="action_school_teacher"
+         groups="group_school_teacher"
+         sequence="1"/>
+
+    <record id="action_school_teacher"
+            model="ir.actions.act_window">
+            <field name="name">Teacher</field>
+            <field name="res_model">school.teacher</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create teacher record
+                </p>
+            </field>
+    </record>
+
+    <record id="view_school_teacher_tree" model="ir.ui.view">
+        <field name="name">school.teacher.tree</field>
+        <field name="model">school.teacher</field>
+        <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="school"/>
+            <field name="experience"/>
+            <field name="age"/>
+        </tree>
+    </field>
+    </record>
+
+    <record id="teacher_form_view" model="ir.ui.view">
+            <field name="name">school.teacher.form</field>
+            <field name="model">school.teacher</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="%(action_view_school_wizard)d" string="Create Student Record" type="action" class="btn-primary"/>
+
+                        <button name="%(action_update_teacher_record_wizard)d"
+                            string="Update Teacher Record"
+                            type="action"
+                            class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" text="Teacher" bg_color="bg-danger" />
+                    <group>
+                        <field name="name"/>
+                        <field name="age"/>
+                        <field name="gender"/>
+                        <field name="dob"/>
+                    </group>
+                    <group>
+                        <field name="school"/>
+                        <field name="code"/>
+                        <field name="experience"/>
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+    </record>
+</odoo>

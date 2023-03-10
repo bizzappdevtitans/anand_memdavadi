@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="school_management_menu_admission"
+         name="Admission"
+         parent="school_management_root"
+         groups="group_school_principal"
+         action="action_school_admission"
+         />
+
+    <record id="action_school_admission"
+            model="ir.actions.act_window">
+            <field name="name">Admission</field>
+            <field name="res_model">school.admission</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,calendar,form,pivot,graph</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create Admission record
+                </p>
+            </field>
+    </record>
+
+    <record id="view_school_admission_tree" model="ir.ui.view">
+        <field name="name">school.admisssion.tree</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+        <tree decoration-success="state == 'new'"
+              decoration-danger="state == 'cancel'">
+            <field name="name" />
+            <field name="school"/>
+            <field name="state" widget="badge"
+                    decoration-success="state == 'new'"
+                    decoration-info="state == 'progress'"
+                    decoration-warning="state == 'confirm'"
+                    decoration-danger="state == 'cancel'"/>
+            <field name="percentage" optional="show"/>
+            <field name="maths_marks" optional="hide"/>
+            <field name="english_marks" optional="hide"/>
+            <field name="science_marks" optional="hide"/>
+        </tree>
+    </field>
+    </record>
+
+    <record id="view_school_admission_form" model="ir.ui.view">
+        <field name="name">school.admission.form</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+        <form>
+            <header>
+                <field name="state" widget="statusbar" options="{'clickable':'1'}" statusbar_visible=""/>
+
+            </header>
+            <sheet>
+                <div class = "alert alert-info text-center o_form_header" role="alert"
+                    attrs="{'invisible':[('is_appointment','=',False)]}">
+                    <a class="close" data-dismiss="alert" href="#">x</a>
+                    <div>
+                        <strong>You have appointment Today</strong>
+                        <div>Welcome<field name="name" readonly="1"/></div>
+                    </div>
+                </div>
+                <group>
+                    <field name="name"/>
+                    <field name="standard"/>
+                    <field name="school" string="Select school"/>
+                    <field name="percentage"/>
+                    <field name="app_date"/>
+                    <field name="is_appointment"/>
+                </group>
+                <notebook>
+                    <page string="Academic Record">
+                        <group>
+                        <field name="maths_marks"/>
+                        <field name="english_marks"/>
+                        <field name="science_marks"/>
+                        </group>
+                    </page>
+                    <page string="Required Documents">
+                        <group>
+                           <field name="doc_info"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
+            <!-- chatter -->
+            <div class="oe_chatter">
+                <field name="message_follower_ids" groups="base.group_user"/>
+                <field name="activity_ids"/>
+                <field name="message_ids"/>
+            </div>
+        </form>
+    </field>
+    </record>
+
+    <record id="admission_calendar" model="ir.ui.view">
+        <field name="name">school.admission.calendar</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <calendar string="Appointment Calendar" date_start="app_date">
+                <field name="name"/>
+                <field name="school"/>
+                <field name="app_date"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="admission_pivot" model="ir.ui.view">
+        <field name="name">school.admission.pivot</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="name" type="row"/>
+                <field name="app_date" type="column"/>
+            </pivot>
+        </field>
+    </record>
+
+
+    <record id="admission_graph" model="ir.ui.view">
+        <field name="name">school.admission.graph</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <graph>
+                <field name="name"/>
+                <field name="app_date"/>
+                <field name="percentage" type="measures"/>
+                <field name="standard" type="measures"/>
+            </graph>
+        </field>
+    </record>
+</odoo>

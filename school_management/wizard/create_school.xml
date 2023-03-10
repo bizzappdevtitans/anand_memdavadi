@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_view_create_school_wizard" model="ir.actions.act_window">
+        <field name="name">Create School Form Wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">create.school</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="school_management.school_form_wizard"/>
+    </record>
+
+    <record id="school_form_wizard" model="ir.ui.view">
+        <field name="name">School Details Form</field>
+        <field name="model">create.school</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="image" widget="image" options="{'size': [300, 200]}"/>
+                        </group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="online_class" widget="boolean_toggle"/>
+                        </group>
+                        <group>
+                            <field name="website" widget="url"/>
+                            <field name="school_type" widget="selection_badge"/>
+                            <field name="address"/>
+                        </group>
+                        <group>
+                            <field name="lib_fees"/>
+                            <field name="tuition_fees"/>
+                            <field name="picnic_fees"/>
+                            <field name="fees"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_create_school_record" type="object" string="Create School" class="btn-primary"/>
+                        <!--  <button name="action_view_teacher_tree" type="object" string="View Teachers" class="btn-primary"/>  -->
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

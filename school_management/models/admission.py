@@ -1,0 +1,102 @@
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
+from datetime import date
+
+
+class SchoolManagement(models.Model):
+    _name = "school.admission"
+    _description = "school.admission"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
+
+    name = fields.Char(string="New Applicant Name")
+    standard = fields.Selection(
+        [
+            ("1", "1"),
+            ("2", "2"),
+            ("3", "3"),
+            ("4", "4"),
+            ("5", "5"),
+            ("6", "6"),
+            ("7", "7"),
+            ("8", "8"),
+            ("9", "9"),
+            ("10", "10"),
+            ("11", "11"),
+            ("12", "12"),
+        ]
+    )
+    is_appointment = fields.Boolean(
+        string="Appointment ?", compute="_compute_appointment"
+    )
+    school = fields.Many2one("school.management", string="School", ondelete="cascade")
+    is_favorite = fields.Boolean()
+    state = fields.Selection(
+        [
+            ("new", "New Applicant"),
+            ("progress", "In Progress"),
+            ("confirm", "Admission Confirmed"),
+            ("cancel", "Admission Cancelled"),
+        ],
+        default="new",
+        string="Status",
+        tracking=True,
+    )
+    app_date = fields.Date(string="Admission Appointment")
+    percentage = fields.Float(string="Percentage", compute="_compute_percentage")
+    maths_marks = fields.Integer(string="Maths Marks")
+    english_marks = fields.Integer(string="English Marks")
+    science_marks = fields.Integer(string="Science Marks")
+
+    doc_info = fields.Text(string="Documentation")
+
+    @api.depends("maths_marks", "english_marks", "science_marks", "percentage")
+    def _compute_percentage(self):
+        for rec in self:
+            total = 0
+            if rec.maths_marks:
+                total += rec.maths_marks
+            if rec.english_marks:
+                total += rec.english_marks
+            if rec.science_marks:
+                total += rec.science_marks
+            rec.percentage = total / 3
+
+    @api.ondelete(at_uninstall=False)
+    def check_state(self):
+        for record in self:
+            if (
+                record.state == "new"
+                or record.state == "progress"
+                or record.state == "confirm"
+            ):
+                raise ValidationError(
+                    _("You can delete admission record of cancel state only")
+                )
+
+    @api.onchange("percentage", "state")
+    def check_pass(self):
+        for rec in self:
+            if rec.percentage <= 60:
+                rec.state = "cancel"
+
+    @api.onchange("percentage", "state")
+    def check_pass1(self):
+        for rec in self:
+            if rec.percentage >= 85:
+                rec.state = "confirm"
+
+    @api.depends("app_date", "state")
+    def _compute_appointment(self):
+        for rec in self:
+            rec.is_appointment = False
+            if rec.state:
+                if rec.app_date:
+                    today = date.today()
+                    if (
+                        today.day == rec.app_date.day
+                        and today.month == rec.app_date.month
+                        and today.year == rec.app_date.year
+                        and rec.state == "confirm"
+                    ):
+                        is_appointment = True
+                        rec.is_appointment = is_appointment

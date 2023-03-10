@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <menuitem id="school_management_menu_result"
+         name="Result"
+         parent="school_management_root"
+         action="action_school_result"
+         groups="group_school_student,group_school_teacher"
+         sequence="6"/>
+
+    <record id="action_school_result"
+            model="ir.actions.act_window">
+            <field name="name">Result</field>
+            <field name="res_model">school.result</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create Result Record
+                </p>
+            </field>
+    </record>
+
+    <record id="view_teacher_tree_inherit" model="ir.ui.view">
+        <field name="name">school.result.inherited</field>
+        <field name="model">school.result</field>
+        <field name="inherit_id" ref="school_management.view_school_result_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr = "//field[@name='course']" position="after">
+                <field name="experience" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_teacher_form_inherit" model="ir.ui.view">
+        <field name="name">school.result.inherited</field>
+        <field name="model">school.result</field>
+        <field name="inherit_id" ref="school_management.view_school_result_form"/>
+        <field name="arch" type="xml">
+            <xpath expr = "//field[@name='standard']" position="after">
+                <field name="experience" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_school_result_tree" model="ir.ui.view">
+        <field name="name">school.result.tree</field>
+        <field name="model">school.result</field>
+        <field name="arch" type="xml">
+        <tree decoration-success="state == 'pass'"
+              decoration-danger="state == 'fail'">
+            <field name="name" optional="show"/>
+            <field name="course"/>
+            <field name="standard"/>
+            <field name="percentage"/>
+            <field name="state" widget="badge"
+                    decoration-success="state == 'pass'"
+                    decoration-danger="state == 'fail'"/>
+            <field name="maths_marks" optional="hide"/>
+            <field name="english_marks" optional="hide"/>
+            <field name="science_marks" optional="hide"/>
+        </tree>
+        </field>
+    </record>
+
+    <record id="view_school_result_form" model="ir.ui.view">
+        <field name="name">school.result.form</field>
+        <field name="model">school.result</field>
+        <field name="arch" type="xml">
+        <form>
+            <header>
+                <field name="state" widget="statusbar" options="{'clickable':'1'}" statusbar_visible=""/>
+            </header>
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <field name="school"/>
+                    <field name="standard"/>
+                    <field name="course"/>
+                    <field name="maths_marks"/>
+                    <field name="english_marks"/>
+                    <field name="science_marks"/>
+                    <field name="percentage"/>
+                </group>
+            </sheet>
+        </form>
+        </field>
+    </record>
+</odoo>

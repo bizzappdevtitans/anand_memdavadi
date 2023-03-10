@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <menuitem id="school_management_menu_transport"
+         name="Transportation Service"
+         parent="school_management_root"
+         groups="group_school_student"
+         action="action_school_transport"
+         sequence="5"/>
+
+    <record id="action_school_transport"
+            model="ir.actions.act_window">
+            <field name="name">Transportation Service</field>
+            <field name="res_model">school.transport</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create transport record
+                </p>
+            </field>
+    </record>
+
+
+    <record id="view_transport_tree" model="ir.ui.view">
+        <field name="name">school.transport.tree</field>
+        <field name="model">school.transport</field>
+        <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="address"/>
+            <field name="school"/>
+            <field name="status"/>
+            <field name="distance"/>
+            <field name="transport_fees"/>
+            <field name="state"
+                    widget="badge"
+                    decoration-success="state == 'new'"
+                    decoration-info="state == 'in'"
+                    decoration-danger="state == 'cancel'"/>
+        </tree>
+        </field>
+    </record>
+
+    <record id="view_school_transport_form" model="ir.ui.view">
+        <field name="name">school.transport.form</field>
+        <field name="model">school.transport</field>
+        <field name="arch" type="xml">
+        <form>
+            <header>
+                <button id="button_in" name="action_in" class="btn-primary" state="new" type="object" string="Using service" confirm="Are you using service?"/>
+                <button id="button_cancel" name="action_cancel" class="btn-primary" state="in" type="object" string="Service Cancel" confirm="Want to cancel service?"/>
+                <button id="button_new" name="action_new" class="btn-primary" state="cancel" type="object" string="Start New Service" confirm="Restart a service?"/>
+                <field name="state" widget="statusbar"/>
+            </header>
+            <sheet>
+                <group>
+                        <field name="name"/>
+                        <field name="school"/>
+                        <field name="orphan" widget='boolean_toggle'/>
+                        <field name="parent" attrs ="{'invisible':[('orphan','=',True)]}" />
+                        <field name="contact_number" attrs = "{'invisible':[('orphan','=',True)]}" />
+                        <field name="date"/>
+                        <field name="address"/>
+                        <field name="distance"/>
+                        <field name="transport_fees" attrs = "{'invisible':[('state','=','cancel')]}"/>
+                        <field name="status"/>
+                        <field name="medical_issues" widget='boolean_toggle'/>
+                        <field name="issues" attrs ="{'invisible':[('medical_issues','=',False)]}"/>
+                </group>
+            </sheet>
+        </form>
+        </field>
+    </record>
+</odoo>
+
