@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_update_teacher_record_wizard" model="ir.actions.act_window">
+        <field name="name">Update Teacher Record</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">update.teacher</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="school_management.teacher_form_wizard"/>
+    </record>
+
+    <record id="teacher_form_wizard" model="ir.ui.view">
+        <field name="name">Update Teacher Record</field>
+        <field name="model">update.teacher</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="experience"/>
+                        <field name="school"/>
+                    </group>
+                    <footer>
+                        <button name="action_update_teacher_record" type="object" string="Update" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
+

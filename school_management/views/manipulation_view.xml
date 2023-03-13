@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="school_management_menu_manipulation"
+         name="Manipulation"
+         parent="school_management_root"
+         action="action_school_manipulation"
+         groups="group_school_principal"
+         sequence="100"/>
+
+    <record id="action_school_manipulation"
+            model="ir.actions.act_window">
+            <field name="name">Data Manipulation</field>
+            <field name="res_model">school.manipulation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create Manipulation record
+                </p>
+            </field>
+    </record>
+
+    <record id="view_school_manipulation_form" model="ir.ui.view">
+        <field name="name">school.manipulation.form</field>
+        <field name="model">school.manipulation</field>
+        <field name="arch" type="xml">
+        <form>
+            <header>
+                <button name="create_details" string="Create" class="oe_highlight" type="object"/>
+                <button id="button_browse" name="action_browse_details" string="Browse" class="oe_highlight" type="object"/>
+                <button name="write_details" string="Write" class="oe_highlight" type="object"/>
+                <button name="search_details" string="Search" class="oe_highlight" type="object"/>
+                <button name="search_count_details" string="Search_Count" class="oe_highlight" type="object"/>
+                <button name="ensure_one_details" string="Ensure One" class="oe_highlight" type="object"/>
+                <button name="query_action" string="SQL query" class="oe_highlight" type="object"/>
+            </header>
+            <sheet>
+                <group>
+                        <field name="name"/>
+                        <field name="dob"/>
+                        <field name="gender"/>
+                        <field name="school_id"/>
+                        <!-- <field name="stud"/> -->
+                </group>
+            </sheet>
+        </form>
+        </field>
+    </record>
+</odoo>
