@@ -5,6 +5,7 @@ class SchoolPrincipal(models.Model):
     _name = "school.principal"
     _description = "school.principal"
     _rec_name = "principal"
+    _order = "principal desc"
 
     principal = fields.Char(string="Principal Name", required=True)
     age = fields.Integer(string="Age")

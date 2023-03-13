@@ -5,6 +5,7 @@ from datetime import date
 class SchoolTeacher(models.Model):
     _name = "school.teacher"
     _description = "school.teacher"
+    _order = "name desc"
 
     name = fields.Char(string="Teacher Name")
     age = fields.Integer(string="Age", compute="_compute_age")

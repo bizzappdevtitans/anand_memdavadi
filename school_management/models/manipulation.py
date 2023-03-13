@@ -13,12 +13,6 @@ class SchoolManipulation(models.Model):
     stud = fields.Many2one("school.student", string="Select Student to delete")
     school_id = fields.Many2one("school.management", string="Select School to delete")
 
-    def query_action(self):
-        query = """select id , name from school_management"""
-        self.env.cr.execute(query)
-        stu = self.env.cr.fetchall()
-        print(stu)
-
     @api.model
     def create_details(self, vals):
         vals = {
@@ -42,10 +36,16 @@ class SchoolManipulation(models.Model):
         print("Search Details-------->", ans)
 
     def search_count_details(self):
-        ans = self.env["school.student"].search_count([("gender", "=", "female")])
+        ans = self.env["school.student"].search_count([("gender", "=", "male")])
         print("Search Count Details-------->", ans)
 
     def ensure_one_details(self):
         self.ensure_one()
-        ans = self.env["school.student"].browse([25]).name
+        ans = self.env["school.student"].browse([1]).name
         print("Check ENSUREONE", ans)
+
+    def query_action(self):
+        query = """select id , name from school_management"""
+        self.env.cr.execute(query)
+        stu = self.env.cr.fetchall()
+        print(stu)

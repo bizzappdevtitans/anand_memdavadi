@@ -5,6 +5,7 @@ from odoo.exceptions import ValidationError
 class SchoolManagement(models.Model):
     _name = "school.management"
     _description = "school.management"
+    _order = "name desc"
 
     name = fields.Char(string="School Name", required=True)
     id = fields.Integer(string="School")
@@ -13,7 +14,7 @@ class SchoolManagement(models.Model):
     online_class = fields.Boolean(string="Online Class", required=True)
     course = fields.Many2many("school.course", string="Select Course")
     website = fields.Char(string="Website")
-    image = fields.Image(string="School Photo")
+    image = fields.Image()
     code = fields.Char(string="School Code")
 
     lib_fees = fields.Float(string="Library Fees")
@@ -25,7 +26,17 @@ class SchoolManagement(models.Model):
     school_type = fields.Selection(
         [("public", "Public School"), ("private", "Private School")]
     )
+    student_count = fields.Integer("student count", compute="_compute_student")
     _sql_constraints = [("unique_tag_name", "unique (name)", "school already exists")]
+
+    @api.depends("student_count")
+    def _compute_student(self):
+        for rec in self:
+            student_count = self.env["school.student"].search_count(
+                [("school", "=", "self.id")]
+            )
+            rec.student_count = student_count
+        print(student_count)
 
     @api.model
     def name_get(self):
@@ -49,6 +60,18 @@ class SchoolManagement(models.Model):
             )
             return rec.name_get()
         return self.search([("name", operator, name)] + args, limit=limit).name_get()
+
+    def action_url(self):
+        return {"type": "ir.actions.act_url", "target": "new", 'url': self.website}
+
+    def action_open_student(self):
+        return {
+            "type": "ir.actions.act_window",
+            "name": "students",
+            "res_model": "school.student",
+            "view_mode": "tree,form",
+            "target": "current",
+        }
 
     @api.depends("tuition_fees")
     def compute_tuition_fees(self):

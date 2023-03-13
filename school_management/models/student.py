@@ -7,6 +7,7 @@ class StudentStudent(models.Model):
     _name = "school.student"
     _description = "school.student"
     _inherit = ["mail.thread", "mail.activity.mixin"]
+    _order = "standard asc"
 
     name = fields.Char(string="Student Name", required=True)
     reference_no = fields.Char(
@@ -21,6 +22,7 @@ class StudentStudent(models.Model):
     id = fields.Integer(string="School")
     transport = fields.Boolean(string="Transportaion")
     is_favorite = fields.Boolean(string="Fav")
+    is_bday = fields.Boolean(string="B'day", default=False)
     image = fields.Binary("Student Photo")
     gender = fields.Selection(
         [("male", "Male"), ("female", "Female"), ("others", "Others")], string="Gender"
@@ -52,12 +54,11 @@ class StudentStudent(models.Model):
     speaking = fields.Selection(
         [("0", "Normal"), ("1", "Good"), ("2", "Very Good"), ("3", "Excellent")],
         "Speaking",
-        default="1")
+        default="1",
+    )
     mentor = fields.Many2one("school.teacher", string="Mentor")
     school = fields.Many2one("school.management", string="School", ondelete="cascade")
-
-    id = fields.Integer(string="School ID", related="name.id")
-
+    active = fields.Boolean("Active", default=True)
     maths_marks = fields.Integer(string="Maths Marks", tracking=True)
     english_marks = fields.Integer(string="English Marks", tracking=True)
     science_marks = fields.Integer(string="Science Marks", tracking=True)
@@ -78,6 +79,12 @@ class StudentStudent(models.Model):
             )
             return rec.name_get()
         return self.search([("name", operator, name)] + args, limit=limit).name_get()
+
+    @api.model
+    def check_bday(self):
+        self.env["school.student"].search([("dob", "=", fields.Date.Today())]).write(
+            {"active": False}
+        )
 
     @api.constrains("maths_marks", "english_marks", "science_marks")
     def check_marks(self):

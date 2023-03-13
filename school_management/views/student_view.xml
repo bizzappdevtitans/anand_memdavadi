@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <menuitem id="school_management_menu_student"
-        name="Student"
-        parent="school_management_root"
-        action="action_school_student"
-        sequence="1"/>
 
     <record id="action_school_student"
             model="ir.actions.act_window">
@@ -23,31 +18,32 @@
         <field name="name">school.student.tree</field>
         <field name="model">school.student</field>
         <field name="arch" type="xml">
-        <tree>
+        <tree multi_edit='1'>
             <field name="is_favorite" widget="boolean_favorite" nolabel="1"/>
             <field name="name" string="Student Name"/>
             <field name="school"/>
             <field name="gender"/>
             <field name="joining_date"/>
+            <field name="hobby"/>
             <field name="standard"/>
         </tree>
         </field>
     </record>
 
     <record model="ir.actions.act_window" id="open_transport">
-            <field name="name">Transportation Service</field>
-            <field name="res_model">school.transport</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[]</field>
-            <field name="context">{}</field>
+        <field name="name">Transportation Service</field>
+        <field name="res_model">school.transport</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
     </record>
 
     <record model="ir.actions.act_window" id="open_result">
-            <field name="name">Result</field>
-            <field name="res_model">school.result</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[]</field>
-            <field name="context">{}</field>
+        <field name="name">Result</field>
+        <field name="res_model">school.result</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
     </record>
 
     <record id="student_form_details_view" model="ir.ui.view">
@@ -74,6 +70,7 @@
                 <widget name="web_ribbon" text="Student" bg_color="bg-danger"/>
                 <field name="image" widget="image" class="oe_avatar" options="{'size': [300, 200]}"/>
                 <group>
+
                     <group>
                         <field name="name" widget="text"/>
                         <field name="age"/>
@@ -81,9 +78,11 @@
                         <field name="standard"/>
                         <field name="course" widget="selection_badge"/>
                         <field name="mentor"/>
-                        <field name="school"/>
+                        <field name="school" widget="selection"/>
                         <field name="id"/>
+                        <field name="active" widget="boolean_button"/>
                     </group>
+
                     <group>
                         <field name="listening" widget="priority"/>
                         <field name="reading" widget="priority"/>
@@ -92,18 +91,17 @@
                     </group>
 
                     <group>
-
                         <field name="dob"/>
-                        <!-- <field name="is_bday"/> -->
                         <field name="student_blood_group"/>
                         <field name="joining_date" widget="remaining_days"/>
                         <field name="hobby" widget="char_emojis,text"/>
                     </group>
+
                 </group>
                 <group>
                     <field name="info" placeholder="Give information about student" string="Student Information" options="{'collaborative':true , 'resizable':true}"/>
                 </group>
-                <notebook>
+                <notebook string="N1">
                     <page string="Academic Record">
                         <group>
                             <field name="maths_marks"/>
@@ -112,6 +110,7 @@
                         </group>
                     </page>
                 </notebook>
+
             </sheet>
             <div class="oe_chatter">
                 <field name="message_follower_ids" groups="base.group_user"/>
@@ -142,6 +141,8 @@
             <filter name="A+ve" string="A positive" domain="[('student_blood_group','=','A+')]"/>
             <filter name="B+ve" string="B positive" domain="[('student_blood_group','=','B+')]"/>
             <filter name="AB+ve" string="AB positive" domain="[('student_blood_group','=','AB+')]"/>
+            <filter string="Archieved" name="inactive"
+                domain="[('active', '=',False)]"/>
 
             <group expand="0" string="Group by">
                 <filter string="standard" name="group_by_standard"

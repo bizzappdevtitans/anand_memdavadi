@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
-    <menuitem id="school_management_menu_transport"
-         name="Transportation Service"
-         parent="school_management_root"
-         groups="group_school_student"
-         action="action_school_transport"
-         sequence="5"/>
-
     <record id="action_school_transport"
             model="ir.actions.act_window">
             <field name="name">Transportation Service</field>
@@ -21,13 +14,12 @@
             </field>
     </record>
 
-
     <record id="view_transport_tree" model="ir.ui.view">
         <field name="name">school.transport.tree</field>
         <field name="model">school.transport</field>
         <field name="arch" type="xml">
         <tree>
-            <field name="name"/>
+            <field name="name" widget="many2one_avatar"/>
             <field name="address"/>
             <field name="school"/>
             <field name="status"/>
@@ -63,10 +55,12 @@
                         <field name="date"/>
                         <field name="address"/>
                         <field name="distance"/>
-                        <field name="transport_fees" attrs = "{'invisible':[('state','=','cancel')]}"/>
+                        <field name="transport_fees"
+                            attrs = "{'invisible':[('state','=','cancel')]}"/>
                         <field name="status"/>
                         <field name="medical_issues" widget='boolean_toggle'/>
-                        <field name="issues" attrs ="{'invisible':[('medical_issues','=',False)]}"/>
+                        <field name="issues"
+                            attrs ="{'invisible':[('medical_issues','=',False)]}"/>
                 </group>
             </sheet>
         </form>

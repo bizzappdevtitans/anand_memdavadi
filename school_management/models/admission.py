@@ -7,6 +7,7 @@ class SchoolManagement(models.Model):
     _name = "school.admission"
     _description = "school.admission"
     _inherit = ["mail.thread", "mail.activity.mixin"]
+    _order = "name desc"
 
     name = fields.Char(string="New Applicant Name")
     standard = fields.Selection(
@@ -49,6 +50,9 @@ class SchoolManagement(models.Model):
 
     doc_info = fields.Text(string="Documentation")
 
+    def action_confirm(self):
+        self.state = "confirm"
+
     @api.depends("maths_marks", "english_marks", "science_marks", "percentage")
     def _compute_percentage(self):
         for rec in self:
@@ -84,6 +88,12 @@ class SchoolManagement(models.Model):
         for rec in self:
             if rec.percentage >= 85:
                 rec.state = "confirm"
+
+    @api.onchange("percentage", "state")
+    def check_pass2(self):
+        for rec in self:
+            if rec.percentage > 60 and rec.percentage < 85:
+                rec.state = "progress"
 
     @api.depends("app_date", "state")
     def _compute_appointment(self):

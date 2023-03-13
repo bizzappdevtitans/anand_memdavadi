@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
-   <menuitem id="school_management_menu_subject"
-         name="Subjects"
-         parent="school_management_root"
-         action="action_school_subject"
-         groups="group_school_student,group_school_teacher"
-         sequence="4"/>
-
     <record id="action_school_subject"
             model="ir.actions.act_window">
             <field name="name">Subjects</field>

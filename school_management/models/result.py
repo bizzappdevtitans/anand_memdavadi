@@ -6,6 +6,7 @@ class SchoolResult(models.Model):
     _name = "school.result"
     _description = "Shows result of the student"
     _inherit = "school.teacher"
+    _order = "name desc"
 
     name = fields.Many2one("school.student", string="Select Student", required=True)
     school = fields.Many2one(

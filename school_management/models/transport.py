@@ -4,10 +4,11 @@ from odoo import models, fields, api
 class SchoolTransportService(models.Model):
     _name = "school.transport"
     _description = "Transportation Service"
+    _order = "name desc"
 
     date = fields.Datetime(string="Date of Joining")
     name = fields.Many2one("school.student", string="Select Student")
-    school = fields.Many2one("school.management", string="School", ondelete="cascade")
+    school = fields.Many2one("school.management", string="School", ondelete="cascade", related="name.school")
     orphan = fields.Boolean(string="Orphan")
     parent = fields.Char(string="Parent Name")
     contact_number = fields.Integer(string="Phone Number")

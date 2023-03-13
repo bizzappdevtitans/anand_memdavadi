@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <menuitem id="school_management_menu_course"
-         name="Courses"
-         parent="school_management_root"
-         action="action_school_course"
-         groups="group_school_student,group_school_teacher"/>
-
+    
     <record id="action_school_course"
             model="ir.actions.act_window">
             <field name="name">Courses</field>
@@ -30,7 +25,7 @@
                         <field name="image" widget="image" options="{'size': [550, 320]}" class="oe_avatar"/>
                         <field name="stream"/>
                         <group>
-                            <field name="student_details"/>
+                            <field name="student_details" widget="one2many_list"/>
                         </group>
                         <field name="sub"/>
                     </group>
