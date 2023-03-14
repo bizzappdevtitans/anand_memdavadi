@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 
 
 class SchoolTransportService(models.Model):
@@ -8,7 +8,9 @@ class SchoolTransportService(models.Model):
 
     date = fields.Datetime(string="Date of Joining")
     name = fields.Many2one("school.student", string="Select Student")
-    school = fields.Many2one("school.management", string="School", ondelete="cascade", related="name.school")
+    school = fields.Many2one(
+        "school.management", string="School", ondelete="cascade", related="name.school"
+    )
     orphan = fields.Boolean(string="Orphan")
     parent = fields.Char(string="Parent Name")
     contact_number = fields.Integer(string="Phone Number")
@@ -38,12 +40,44 @@ class SchoolTransportService(models.Model):
 
     def action_in(self):
         self.state = "in"
+        message = "In use Service"
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {"message": message, "type": "success", "sticky": False},
+        }
 
     def action_cancel(self):
-        self.state = "cancel"
+
+        action = self.env.ref("school_management.action_school_transport")
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "param": {
+                "title": _("Transportation Tree View"),
+                "message": '%s',
+                "links": [{
+                        'label': self.name,
+                        'url': f'#action={action.id}&id={self.id}&model=school.transport',
+                        }],
+                "sticky": False,
+            },
+        }
+        # message = "Service Cancel"
+        # return {
+        #     "type": "ir.actions.client",
+        #     "tag": "display_notification",
+        #     "params": {"message": message, "type": "danger", "sticky": False},
+        # }
 
     def action_new(self):
         self.state = "new"
+        # message = "New Service"
+        # return {
+        #     "type": "ir.actions.client",
+        #     "tag": "display_notification",
+        #     "params": {"message": message, "type": "warning", "sticky": False},
+        # }
 
     @api.depends("distance")
     def _compute_charge(self):

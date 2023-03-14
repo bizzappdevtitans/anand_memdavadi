@@ -30,6 +30,7 @@
         "wizard/update_teacher_wizard_view.xml",
         "data/data.xml",
         "data/birthday_cron.xml",
+        "data/mail_template.xml",
         "views/school_view.xml",
         "views/student_view.xml",
         "views/teacher_view.xml",

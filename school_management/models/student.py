@@ -27,6 +27,8 @@ class StudentStudent(models.Model):
     gender = fields.Selection(
         [("male", "Male"), ("female", "Female"), ("others", "Others")], string="Gender"
     )
+    email = fields.Char(string="Email")
+    user_id = fields.Many2one("res.users", string="Select User")
     hobby = fields.Text(string="Hobby")
     dob = fields.Date(string="Date of Birth")
     standard = fields.Integer(string="Standard", tracking=True)
@@ -82,9 +84,14 @@ class StudentStudent(models.Model):
 
     @api.model
     def check_bday(self):
-        self.env["school.student"].search([("dob", "=", fields.Date.Today())]).write(
-            {"active": False}
-        )
+        today = fields.Date.today()
+        students = self.env["school.student"].search([("active", "=", True)])
+        print(students)
+        for student in students:
+            if student.dob == today:
+                print("Happy Birthday")
+
+        # self.env["school.student"].search([("dob", "=", fields.Date.Today())]).write({"active": False})
 
     @api.constrains("maths_marks", "english_marks", "science_marks")
     def check_marks(self):
@@ -139,3 +146,9 @@ class StudentStudent(models.Model):
         for rec in self:
             stud_list.append((rec.id, "%s - %s" % (rec.reference_no, rec.name)))
         return stud_list
+
+    def action_send_mail(self):
+        template = self.env.ref("school_management.student_birthday_email_template")
+        for rec in self:
+            if rec.email:
+                template.send_mail(rec.id, force_send=True)
