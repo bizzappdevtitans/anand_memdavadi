@@ -49,6 +49,17 @@
       </field>
     </record>
 
+    <record id="view_school_student_search" model="ir.ui.view">
+        <field name="name">school.admission.search</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+        <search>
+            <filter string="Archieved" name="inactive"
+                domain="[('active', '=',False)]"/>
+        </search>
+        </field>
+    </record>
+
     <record id="view_school_admission_form" model="ir.ui.view">
         <field name="name">school.admission.form</field>
         <field name="model">school.admission</field>

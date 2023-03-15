@@ -3,7 +3,7 @@ from odoo.exceptions import ValidationError
 from datetime import date
 
 
-class StudentStudent(models.Model):
+class SchoolStudent(models.Model):
     _name = "school.student"
     _description = "school.student"
     _inherit = ["mail.thread", "mail.activity.mixin"]
@@ -66,6 +66,28 @@ class StudentStudent(models.Model):
     science_marks = fields.Integer(string="Science Marks", tracking=True)
     count_student = fields.Integer(compute="_comput_student")
 
+    """This method is used for cron-job during student birthday"""
+
+    def check_bday(self):
+        today = fields.Date.today()
+        today_month = today.strftime("%m")
+        today_date = today.strftime("%d")
+        students = self.env["school.student"].search([("active", "=", True)])
+        for student in students:
+            if student.email:
+                bday_month = student.dob.strftime("%m")
+                bday_date = student.dob.strftime("%d")
+                if bday_date == today_date and bday_month == today_month:
+                    print("Happy Birthday Dear", student.name)
+                    template = self.env.ref(
+                        "school_management.student_birthday_email_template"
+                    )
+                    template.send_mail(student.id)
+            else:
+                raise ValidationError(("Email is mandatory"))
+
+    """This method is used for name search """
+
     @api.model
     def name_search(self, name, args=None, operator="ilike", limit=100):
         args = args or []
@@ -82,16 +104,7 @@ class StudentStudent(models.Model):
             return rec.name_get()
         return self.search([("name", operator, name)] + args, limit=limit).name_get()
 
-    @api.model
-    def check_bday(self):
-        today = fields.Date.today()
-        students = self.env["school.student"].search([("active", "=", True)])
-        print(students)
-        for student in students:
-            if student.dob == today:
-                print("Happy Birthday")
-
-        # self.env["school.student"].search([("dob", "=", fields.Date.Today())]).write({"active": False})
+    """This method is used for validation that marks should not be greatter than 100"""
 
     @api.constrains("maths_marks", "english_marks", "science_marks")
     def check_marks(self):
@@ -103,6 +116,8 @@ class StudentStudent(models.Model):
             ):
                 raise ValidationError(("Marks should be less than 100"))
 
+    """This method is used for calculating age of student"""
+
     def _compute_age(self):
         for rec in self:
             today = date.today()
@@ -111,11 +126,7 @@ class StudentStudent(models.Model):
             else:
                 rec.age = 0
 
-    _sql_constraints = [("unique_tag_name", "unique (name)", "Student already exists")]
-
-    @api.onchange("school")
-    def names(self):
-        print("school", self.school)
+    """Create ORM method"""
 
     @api.model
     def create(self, vals):
@@ -123,7 +134,7 @@ class StudentStudent(models.Model):
             vals["reference_no"] = self.env["ir.sequence"].next_by_code(
                 "school.student"
             ) or _("New")
-            res = super(StudentStudent, self).create(vals)
+            res = super(SchoolStudent, self).create(vals)
             if not vals.get("gender"):
                 vals["gender"] = "others"
                 if vals.get("gender") == "male":
@@ -134,21 +145,28 @@ class StudentStudent(models.Model):
                     return res
         return res
 
+    """Default get method to return default values of fields"""
+
     @api.model
     def default_get(self, fields):
-        rec = super(StudentStudent, self).default_get(fields)
+        rec = super(SchoolStudent, self).default_get(fields)
         print("Fields--------->", fields)
         print("rec------------>", rec)
         return rec
 
+    """Name get function used add reference number and student name instead of student id"""
     def name_get(self):
         stud_list = []
         for rec in self:
             stud_list.append((rec.id, "%s - %s" % (rec.reference_no, rec.name)))
         return stud_list
 
+    """This function is used to send mail using button"""
     def action_send_mail(self):
         template = self.env.ref("school_management.student_birthday_email_template")
         for rec in self:
             if rec.email:
                 template.send_mail(rec.id, force_send=True)
+
+    """ Constraints given that student should be of unique name only """
+    _sql_constraints = [("unique_tag_name", "unique (name)", "Student already exists")]

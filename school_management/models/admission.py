@@ -10,6 +10,7 @@ class SchoolManagement(models.Model):
     _order = "name desc"
 
     name = fields.Char(string="New Applicant Name")
+    active = fields.Boolean("Active", default=True)
     standard = fields.Selection(
         [
             ("1", "1"),
@@ -47,12 +48,17 @@ class SchoolManagement(models.Model):
     maths_marks = fields.Integer(string="Maths Marks")
     english_marks = fields.Integer(string="English Marks")
     science_marks = fields.Integer(string="Science Marks")
-
     doc_info = fields.Text(string="Documentation")
 
+    """ Action for confirm button"""
     def action_confirm(self):
         self.state = "confirm"
 
+    """Action for cron job for cancelled admission"""
+    def action_archieved_cancel_admission(self):
+        self.env['school.admission'].search([('state', '=', 'cancel')]).write({'active': False})
+
+    """To calculate percentage"""
     @api.depends("maths_marks", "english_marks", "science_marks", "percentage")
     def _compute_percentage(self):
         for rec in self:
@@ -65,6 +71,7 @@ class SchoolManagement(models.Model):
                 total += rec.science_marks
             rec.percentage = total / 3
 
+    """Constrains for deleting record, record should be in cancel state"""
     @api.ondelete(at_uninstall=False)
     def check_state(self):
         for record in self:
@@ -77,24 +84,28 @@ class SchoolManagement(models.Model):
                     _("You can delete admission record of cancel state only")
                 )
 
+    """If student has less than 60% state changes to admission cancel"""
     @api.onchange("percentage", "state")
     def check_pass(self):
         for rec in self:
             if rec.percentage <= 60:
                 rec.state = "cancel"
 
+    """If student has greater than 85% state changes to admission confirm"""
     @api.onchange("percentage", "state")
     def check_pass1(self):
         for rec in self:
             if rec.percentage >= 85:
                 rec.state = "confirm"
 
+    """Else state will be in progress """
     @api.onchange("percentage", "state")
     def check_pass2(self):
         for rec in self:
             if rec.percentage > 60 and rec.percentage < 85:
                 rec.state = "progress"
 
+    """If admission confirmed & today is appointment day it notifies"""
     @api.depends("app_date", "state")
     def _compute_appointment(self):
         for rec in self:

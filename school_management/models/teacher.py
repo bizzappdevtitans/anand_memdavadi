@@ -15,9 +15,21 @@ class SchoolTeacher(models.Model):
     experience = fields.Integer(string="Years of Experience")
     school = fields.Many2one("school.management", string="School", ondelete="cascade")
     code = fields.Char(string="School Code")
-
     dob = fields.Date(string="Date of Birth")
 
+    """Function used for cron job message in terminal"""
+    def check_bday(self):
+        today = fields.Date.today()
+        today_month = today.strftime("%m")
+        today_date = today.strftime("%d")
+        teachers = self.env["school.teacher"].search([])
+        for teacher in teachers:
+            bday_month = teacher.dob.strftime("%m")
+            bday_date = teacher.dob.strftime("%d")
+            if bday_date == today_date and bday_month == today_month:
+                print("Happy Birthday Dear", teacher.name)
+
+    """Function used to calculate teachers age"""
     def _compute_age(self):
         for rec in self:
             today = date.today()
@@ -26,6 +38,7 @@ class SchoolTeacher(models.Model):
             else:
                 rec.age = 0
 
+    """Function used to change school code when school is changed"""
     @api.onchange("school")
     def onchange_code(self):
         print("onchange triggerred")

@@ -1,4 +1,4 @@
-from odoo import models, fields, api, _
+from odoo import models, fields, api
 
 
 class SchoolTransportService(models.Model):
@@ -48,36 +48,22 @@ class SchoolTransportService(models.Model):
         }
 
     def action_cancel(self):
-
-        action = self.env.ref("school_management.action_school_transport")
+        self.state = "cancel"
+        message = "Service Cancel"
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",
-            "param": {
-                "title": _("Transportation Tree View"),
-                "message": '%s',
-                "links": [{
-                        'label': self.name,
-                        'url': f'#action={action.id}&id={self.id}&model=school.transport',
-                        }],
-                "sticky": False,
-            },
+            "params": {"message": message, "type": "danger", "sticky": False},
         }
-        # message = "Service Cancel"
-        # return {
-        #     "type": "ir.actions.client",
-        #     "tag": "display_notification",
-        #     "params": {"message": message, "type": "danger", "sticky": False},
-        # }
 
     def action_new(self):
         self.state = "new"
-        # message = "New Service"
-        # return {
-        #     "type": "ir.actions.client",
-        #     "tag": "display_notification",
-        #     "params": {"message": message, "type": "warning", "sticky": False},
-        # }
+        message = "New Service"
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {"message": message, "type": "warning", "sticky": False},
+        }
 
     @api.depends("distance")
     def _compute_charge(self):

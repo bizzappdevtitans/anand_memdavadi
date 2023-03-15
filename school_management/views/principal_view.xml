@@ -38,6 +38,7 @@
                         <group>
                             <field name="principal"/>
                             <field name="age"/>
+                            <field name="dob"/>
                             <field name="gender"/>
                             <field name="experience"/>
                             <field name="school"/>

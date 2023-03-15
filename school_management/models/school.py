@@ -32,11 +32,11 @@ class SchoolManagement(models.Model):
     @api.depends("student_count")
     def _compute_student(self):
         for rec in self:
-            student_count = self.env["school.student"].search_count(
+            rec.student_count = self.env["school.student"].search_count(
                 [("school", "=", "self.id")]
             )
-            rec.student_count = student_count
-        print(student_count)
+            student_count = rec.student_count
+            print(student_count)
 
     @api.model
     def name_get(self):

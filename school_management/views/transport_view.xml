@@ -40,9 +40,9 @@
         <field name="arch" type="xml">
         <form>
             <header>
-                <button id="button_new" name="action_new" class="btn-primary" state="cancel" type="object" string="Start New Service" confirm="Restart a service?"/>
-                <button id="button_in" name="action_in" class="btn-primary" state="new" type="object" string="Using service" confirm="Are you using service?"/>
-                <button id="button_cancel" name="action_cancel" class="btn-primary" state="in" type="object" string="Service Cancel" confirm="Want to cancel service?"/>
+                <button id="button_new" name="action_new" class="btn-primary" states="cancel" type="object" string="Start New Service" confirm="Restart a service?"/>
+                <button id="button_in" name="action_in" class="btn-primary" states="new" type="object" string="Using service" confirm="Are you using service?"/>
+                <button id="button_cancel" name="action_cancel" class="btn-primary" states="in" type="object" string="Service Cancel" confirm="Want to cancel service?"/>
                 <field name="state" widget="statusbar"/>
             </header>
             <sheet>
