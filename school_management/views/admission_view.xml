@@ -67,7 +67,8 @@
         <form>
             <header>
                 <field name="state" widget="statusbar" options="{'clickable':'1'}" statusbar_visible=""/>
-
+                <button name="action_share_whatsapp" class="btn-primary" type="object" string="WhatsApp"
+                    icon="fa-whatsapp"/>
             </header>
             <sheet>
                 <div class = "alert alert-info text-center o_form_header" role="alert"
@@ -85,6 +86,7 @@
                     <field name="percentage"/>
                     <field name="app_date"/>
                     <field name="is_appointment"/>
+                    <field name="number"/>
                 </group>
                 <notebook>
                     <page string="Academic Record">

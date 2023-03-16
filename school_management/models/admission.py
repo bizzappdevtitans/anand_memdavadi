@@ -49,16 +49,22 @@ class SchoolManagement(models.Model):
     english_marks = fields.Integer(string="English Marks")
     science_marks = fields.Integer(string="Science Marks")
     doc_info = fields.Text(string="Documentation")
+    number = fields.Integer(string="Phone Number")
 
     """ Action for confirm button"""
+
     def action_confirm(self):
         self.state = "confirm"
 
     """Action for cron job for cancelled admission"""
+
     def action_archieved_cancel_admission(self):
-        self.env['school.admission'].search([('state', '=', 'cancel')]).write({'active': False})
+        self.env["school.admission"].search([("state", "=", "cancel")]).write(
+            {"active": False}
+        )
 
     """To calculate percentage"""
+
     @api.depends("maths_marks", "english_marks", "science_marks", "percentage")
     def _compute_percentage(self):
         for rec in self:
@@ -72,6 +78,7 @@ class SchoolManagement(models.Model):
             rec.percentage = total / 3
 
     """Constrains for deleting record, record should be in cancel state"""
+
     @api.ondelete(at_uninstall=False)
     def check_state(self):
         for record in self:
@@ -85,6 +92,7 @@ class SchoolManagement(models.Model):
                 )
 
     """If student has less than 60% state changes to admission cancel"""
+
     @api.onchange("percentage", "state")
     def check_pass(self):
         for rec in self:
@@ -92,6 +100,7 @@ class SchoolManagement(models.Model):
                 rec.state = "cancel"
 
     """If student has greater than 85% state changes to admission confirm"""
+
     @api.onchange("percentage", "state")
     def check_pass1(self):
         for rec in self:
@@ -99,6 +108,7 @@ class SchoolManagement(models.Model):
                 rec.state = "confirm"
 
     """Else state will be in progress """
+
     @api.onchange("percentage", "state")
     def check_pass2(self):
         for rec in self:
@@ -106,6 +116,7 @@ class SchoolManagement(models.Model):
                 rec.state = "progress"
 
     """If admission confirmed & today is appointment day it notifies"""
+
     @api.depends("app_date", "state")
     def _compute_appointment(self):
         for rec in self:
@@ -121,3 +132,18 @@ class SchoolManagement(models.Model):
                     ):
                         is_appointment = True
                         rec.is_appointment = is_appointment
+
+    def action_share_whatsapp(self):
+        if self.is_appointment == True and self.number:
+            message = "Hi %s you have admission appointment today" % (self.name)
+            whatsapp_api_url = "https://api.whatsapp.com/send?phone%s&text=%s" % (
+                self.number,
+                message,
+            )
+            return {
+                "type": "ir.actions.act_url",
+                "target": "new",
+                "url": whatsapp_api_url,
+            }
+        else:
+            raise ValidationError("Invalid Number")

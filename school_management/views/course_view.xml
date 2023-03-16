@@ -24,9 +24,7 @@
                     <group>
                         <field name="image" widget="image" options="{'size': [550, 320]}" class="oe_avatar"/>
                         <field name="stream"/>
-                        <group>
-                            <field name="student_details" widget="one2many_list"/>
-                        </group>
+                        <field name="student_details" widget="one2many_list"/>
                         <field name="sub"/>
                     </group>
                     </sheet>

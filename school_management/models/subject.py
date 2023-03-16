@@ -7,6 +7,5 @@ class SchoolTransportService(models.Model):
 
     name = fields.Char(string="Subject Name", required=True)
     code = fields.Char(string="Subject Code")
-    course = fields.Many2one("school.course", string="Please select course")
 
     _sql_constraints = [("unique_tag_name", "unique (name)", "Subject already exists")]

@@ -86,6 +86,7 @@
                         <field name="active" widget="boolean_button"/>
                         <field name="user_id"/>
                         <field name="email" widget="email"/>
+                        <field name="contact_number" widget="phone"/>
                     </group>
 
                     <group>
@@ -170,7 +171,7 @@
         <field name="name">school.student.kanban</field>
         <field name="model">school.student</field>
         <field name="arch" type="xml">
-            <kanban>
+            <kanban default_group_by = "school">
                 <field name="name" />
                 <field name="age"/>
                 <field name="gender" />

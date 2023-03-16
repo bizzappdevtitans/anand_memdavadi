@@ -21,7 +21,6 @@
         <tree>
             <field name="name"/>
             <field name="code"/>
-            <field name="course"/>
         </tree>
         </field>
     </record>

@@ -62,7 +62,10 @@ class SchoolManagement(models.Model):
         return self.search([("name", operator, name)] + args, limit=limit).name_get()
 
     def action_url(self):
-        return {"type": "ir.actions.act_url", "target": "new", 'url': self.website}
+        return {
+                "type": "ir.actions.act_url",
+                "target": "new",
+                'url': self.website}
 
     def action_open_student(self):
         return {

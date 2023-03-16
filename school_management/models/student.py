@@ -64,7 +64,7 @@ class SchoolStudent(models.Model):
     maths_marks = fields.Integer(string="Maths Marks", tracking=True)
     english_marks = fields.Integer(string="English Marks", tracking=True)
     science_marks = fields.Integer(string="Science Marks", tracking=True)
-    count_student = fields.Integer(compute="_comput_student")
+    contact_number = fields.Integer(string="Phone Number")
 
     """This method is used for cron-job during student birthday"""
 
@@ -155,6 +155,7 @@ class SchoolStudent(models.Model):
         return rec
 
     """Name get function used add reference number and student name instead of student id"""
+
     def name_get(self):
         stud_list = []
         for rec in self:
@@ -162,11 +163,53 @@ class SchoolStudent(models.Model):
         return stud_list
 
     """This function is used to send mail using button"""
+
     def action_send_mail(self):
         template = self.env.ref("school_management.student_birthday_email_template")
         for rec in self:
             if rec.email:
                 template.send_mail(rec.id, force_send=True)
 
-    """ Constraints given that student should be of unique name only """
-    _sql_constraints = [("unique_tag_name", "unique (name)", "Student already exists")]
+    def action_share_whatsapp(self):
+        today = fields.Date.today()
+        today_month = today.strftime("%m")
+        today_date = today.strftime("%d")
+        students = self.env["school.student"].search([("active", "=", True)])
+        for student in students:
+            if student.contact_number:
+                print(student.contact_number)
+                bday_month = student.dob.strftime("%m")
+                bday_date = student.dob.strftime("%d")
+                if (
+                    bday_date == today_date
+                    and bday_month == today_month
+                    and student.contact_number
+                ):
+                    print("BDAY MATCHED")
+                    message = "Hi %s, Have happiest B'day & Enjoy yours day!"%(student.name)
+                    wp_url = "https://api.whatsapp.com"
+                    print(message)
+                    return{
+                        "type": "ir.actions.act_url",
+                        "url": wp_url,
+                        "target": "current"
+                        }
+
+
+    def message_in_general_channel(self):
+        today = fields.Date.today()
+        today_month = today.strftime("%m")
+        today_date = today.strftime("%d")
+        students = self.env["school.student"].search([("active", "=", True)])
+        for student in students:
+            bday_month = student.dob.strftime("%m")
+            bday_date = student.dob.strftime("%d")
+            if bday_date == today_date and bday_month == today_month:
+                message = "Happy Birthday %s" % (student.name)
+                channel_id = self.env.ref("mail.channel_all_employees").id
+                channel = self.env["mail.channel"].browse(channel_id)
+                channel.message_post(
+                    body=(message),
+                    message_type="comment",
+                    subtype_xmlid="mail.mt_comment",
+                )
