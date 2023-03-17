@@ -16,6 +16,7 @@ class SchoolTeacher(models.Model):
     school = fields.Many2one("school.management", string="School", ondelete="cascade")
     code = fields.Char(string="School Code")
     dob = fields.Date(string="Date of Birth")
+    student_under_mentor = fields.One2many("school.student", "mentor")
 
     """Function used for cron job message in terminal"""
     def check_bday(self):

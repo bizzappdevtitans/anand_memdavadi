@@ -6,7 +6,7 @@
             <field name="name">Transportation Service</field>
             <field name="res_model">school.transport</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,kanban</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Create transport record
@@ -66,5 +66,43 @@
         </form>
         </field>
     </record>
+
+    <record id="transport_kanban_view" model="ir.ui.view">
+            <field name="name">school.transport.kanban</field>
+            <field name="model">school.transport</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by= "name">
+                    <field name="name"/>
+                    <field name="transport_fees"/>
+                    <field name="address"/>
+                    <field name="distance"/>
+                    <field name="contact_number"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                    </strong>
+                                </div>
+                                 <div t-if="record.transport_fees.value">
+                                     Fees:   <t t-esc="record.transport_fees.value"/>
+                                </div>
+                                <div t-if="record.address.value">
+                                     Address:   <t t-esc="record.address.value"/>
+                                </div>
+                                 <div t-if="record.distance.value">
+                                       Distance: <t t-esc="record.distance.value"/>
+                                </div>
+                                    <div t-if="record.contact_number.value">
+                                       Phone Number: <t t-esc="record.contact_number.value"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
 </odoo>
 

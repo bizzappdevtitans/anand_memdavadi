@@ -25,7 +25,7 @@
                         <field name="image" widget="image" options="{'size': [550, 320]}" class="oe_avatar"/>
                         <field name="stream"/>
                         <field name="student_details" widget="one2many_list"/>
-                        <field name="sub"/>
+                        <field name="subject" widget="one2many_list"/>
                     </group>
                     </sheet>
                 </form>
@@ -39,7 +39,7 @@
         <tree>
             <field name="image" widget="image" options="{'size': [150, 120]}"/>
             <field name="stream" string="Course"/>
-            <field name="sub"/>
+            <field name="subject"/>
             <field name="student_details" optional="hide"/>
         </tree>
         </field>

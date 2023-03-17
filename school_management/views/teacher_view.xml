@@ -52,6 +52,7 @@
                         <field name="school"/>
                         <field name="code"/>
                         <field name="experience"/>
+                        <field name="student_under_mentor"/>
                     </group>
                     </sheet>
                 </form>

@@ -195,7 +195,6 @@ class SchoolStudent(models.Model):
                         "target": "current"
                         }
 
-
     def message_in_general_channel(self):
         today = fields.Date.today()
         today_month = today.strftime("%m")

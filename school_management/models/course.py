@@ -7,9 +7,10 @@ class SchoolCourse(models.Model):
     _rec_name = "stream"
 
     stream = fields.Selection(
-        [("science", "Science"), ("arts", "Arts"), ("commerce", "Commerce")],
+        [("Science", "Science"), ("Arts", "Arts"), ("Commerce", "Commerce")],
         string="Course stream",
     )
     image = fields.Binary()
     student_details = fields.One2many("school.student", "course")
+    subject = fields.One2many("school.subject", "course")
     sub = fields.Many2many("school.subject", string="Subject to study:")

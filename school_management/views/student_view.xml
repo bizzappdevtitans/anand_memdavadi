@@ -81,7 +81,7 @@
                         <field name="standard"/>
                         <field name="course" widget="selection_badge"/>
                         <field name="mentor"/>
-                        <field name="school" widget="selection"/>
+                        <field name="school" widget="selection" placeholder="Schools "/>
                         <field name="id"/>
                         <field name="active" widget="boolean_button"/>
                         <field name="user_id"/>
@@ -159,8 +159,7 @@
                         context="{'group_by':'gender'}"/>
             </group>
             <searchpanel>
-                <field name="school" string="School"
-                    enable_counters="2" icon="fa-users"/>
+                <field name="mentor" icon="fa-users" select="multi" enable_counter="1"/>
             </searchpanel>
         </search>
     </field>
