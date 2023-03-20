@@ -21,6 +21,7 @@
         "stock",
         "purchase",
         "purchase_stock",
+        "product"
     ],
     "data": [
         "security/ir.model.access.csv",
