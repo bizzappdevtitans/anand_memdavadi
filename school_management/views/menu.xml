@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <menuitem id="school_management_root"
+        name="School"
+        action="action_school_management"
+        sequence="1"
+        groups="group_school_principal"/>
+
+    <menuitem id="school_management_menu_admission"
+         name="Admission"
+         parent="school_management_root"
+         groups="group_school_principal"
+         action="action_school_admission"
+         />
+
+    <menuitem id="school_management_menu_course"
+         name="Courses"
+         parent="school_management_root"
+         action="action_school_course"
+         groups="group_school_student,group_school_teacher"/>
+
+    <menuitem id="school_management_menu_principal"
+         name="Principal"
+         parent="school_management_menu_staff"
+         action="action_school_principal"
+         groups="group_school_principal"
+         sequence="1"/>
+
+    <menuitem id="school_management_menu_result"
+         name="Result"
+         parent="school_management_root"
+         action="action_school_result"
+         groups="group_school_student,group_school_teacher"
+         sequence="6"/>
+
+    <menuitem id="school_management_menu_student"
+        name="Student"
+        parent="school_management_root"
+        action="action_school_student"
+        sequence="1"/>
+
+    <menuitem id="school_management_menu_subject"
+         name="Subjects"
+         parent="school_management_root"
+         action="action_school_subject"
+         groups="group_school_student,group_school_teacher"
+         sequence="4"/>
+
+    <menuitem id="school_management_menu_staff"
+         name="Staff"
+         parent="school_management_root"
+         sequence="1"/>
+
+    <menuitem id="school_management_wizard_menu"
+         name="Create School"
+         parent="school_management_menu_staff"
+         action="action_view_create_school_wizard"
+         groups="group_school_principal"
+         sequence="10"/>
+
+    <menuitem id="school_management_menu_teacher"
+         name="Teacher"
+         parent="school_management_menu_staff"
+         action="action_school_teacher"
+         groups="group_school_teacher"
+         sequence="1"/>
+
+    <menuitem id="school_management_menu_transport"
+         name="Transportation Service"
+         parent="school_management_root"
+         groups="group_school_student"
+         action="action_school_transport"
+         sequence="5"/>
+</odoo>

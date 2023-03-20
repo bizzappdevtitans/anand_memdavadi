@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_school_transport"
+            model="ir.actions.act_window">
+            <field name="name">Transportation Service</field>
+            <field name="res_model">school.transport</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create transport record
+                </p>
+            </field>
+    </record>
+
+    <record id="view_transport_tree" model="ir.ui.view">
+        <field name="name">school.transport.tree</field>
+        <field name="model">school.transport</field>
+        <field name="arch" type="xml">
+        <tree>
+            <field name="name" widget="many2one_avatar"/>
+            <field name="address"/>
+            <field name="school"/>
+            <field name="status"/>
+            <field name="distance"/>
+            <field name="transport_fees"/>
+            <field name="state"
+                    widget="badge"
+                    decoration-success="state == 'new'"
+                    decoration-info="state == 'in'"
+                    decoration-danger="state == 'cancel'"/>
+        </tree>
+        </field>
+    </record>
+
+    <record id="view_school_transport_form" model="ir.ui.view">
+        <field name="name">school.transport.form</field>
+        <field name="model">school.transport</field>
+        <field name="arch" type="xml">
+        <form>
+            <header>
+                <button id="button_new" name="action_new" class="btn-primary" states="cancel" type="object" string="Start New Service" confirm="Restart a service?"/>
+                <button id="button_in" name="action_in" class="btn-primary" states="new" type="object" string="Using service" confirm="Are you using service?"/>
+                <button id="button_cancel" name="action_cancel" class="btn-primary" states="in" type="object" string="Service Cancel" confirm="Want to cancel service?"/>
+                <field name="state" widget="statusbar"/>
+            </header>
+            <sheet>
+                <group>
+                        <field name="name"/>
+                        <field name="school"/>
+                        <field name="orphan" widget='boolean_toggle'/>
+                        <field name="parent" attrs ="{'invisible':[('orphan','=',True)]}" />
+                        <field name="contact_number" attrs = "{'invisible':[('orphan','=',True)]}" />
+                        <field name="date"/>
+                        <field name="address"/>
+                        <field name="distance"/>
+                        <field name="transport_fees"
+                            attrs = "{'invisible':[('state','=','cancel')]}"/>
+                        <field name="status"/>
+                        <field name="medical_issues" widget='boolean_toggle'/>
+                        <field name="issues"
+                            attrs ="{'invisible':[('medical_issues','=',False)]}"/>
+                </group>
+            </sheet>
+        </form>
+        </field>
+    </record>
+
+    <record id="transport_kanban_view" model="ir.ui.view">
+            <field name="name">school.transport.kanban</field>
+            <field name="model">school.transport</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by= "name">
+                    <field name="name"/>
+                    <field name="transport_fees"/>
+                    <field name="address"/>
+                    <field name="distance"/>
+                    <field name="contact_number"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                    </strong>
+                                </div>
+                                 <div t-if="record.transport_fees.value">
+                                     Fees:   <t t-esc="record.transport_fees.value"/>
+                                </div>
+                                <div t-if="record.address.value">
+                                     Address:   <t t-esc="record.address.value"/>
+                                </div>
+                                 <div t-if="record.distance.value">
+                                       Distance: <t t-esc="record.distance.value"/>
+                                </div>
+                                    <div t-if="record.contact_number.value">
+                                       Phone Number: <t t-esc="record.contact_number.value"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+</odoo>
+

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_school_teacher"
+            model="ir.actions.act_window">
+            <field name="name">Teacher</field>
+            <field name="res_model">school.teacher</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create teacher record
+                </p>
+            </field>
+    </record>
+
+    <record id="view_school_teacher_tree" model="ir.ui.view">
+        <field name="name">school.teacher.tree</field>
+        <field name="model">school.teacher</field>
+        <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="school"/>
+            <field name="experience"/>
+            <field name="age"/>
+        </tree>
+    </field>
+    </record>
+
+    <record id="teacher_form_view" model="ir.ui.view">
+            <field name="name">school.teacher.form</field>
+            <field name="model">school.teacher</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="%(action_view_school_wizard)d" string="Create Student Record" type="action" class="btn-primary"/>
+
+                        <button name="%(action_update_teacher_record_wizard)d"
+                            string="Update Teacher Record"
+                            type="action"
+                            class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" text="Teacher" bg_color="bg-danger" />
+                    <group>
+                        <field name="name"/>
+                        <field name="age"/>
+                        <field name="gender"/>
+                        <field name="dob"/>
+                    </group>
+                    <group>
+                        <field name="school"/>
+                        <field name="code"/>
+                        <field name="experience"/>
+                        <field name="student_under_mentor"/>
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+    </record>
+
+    <record id="action_create_student_wizard" model="ir.actions.server">
+      <field name="name">Create Student</field>
+      <field name="type">ir.actions.server</field>
+      <field name="model_id" ref="school_management.model_school_teacher"/>
+      <field name="binding_model_id" ref="school_management.model_school_teacher"/>
+      <field name="binding_view_types">form</field>
+      <field name="state">code</field>
+      <field name="code">
+        if record:
+            action_values = env.ref('school_management.action_view_school_wizard').sudo().read()[0]
+            action_values.update({'context' : env.context})
+            action = action_values
+      </field>
+    </record>
+</odoo>

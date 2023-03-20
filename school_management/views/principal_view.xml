@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_school_principal"
+            model="ir.actions.act_window">
+            <field name="name">Principal</field>
+            <field name="res_model">school.principal</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create Principal record
+                </p>
+            </field>
+    </record>
+
+    <record id="view_school_principal_tree" model="ir.ui.view">
+        <field name="name">school.principal.tree</field>
+        <field name="model">school.principal</field>
+        <field name="arch" type="xml">
+        <tree>
+            <field name="principal"/>
+            <field name="age"/>
+            <field name="gender"/>
+            <field name="experience"/>
+            <field name="school"/>
+        </tree>
+    </field>
+    </record>
+
+    <record id="principal_form_view" model="ir.ui.view">
+            <field name="name">school.principal.form</field>
+            <field name="model">school.principal</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <widget name="web_ribbon" text="Principal" bg_color="bg-danger" />
+                        <group>
+                            <field name="principal"/>
+                            <field name="age"/>
+                            <field name="dob"/>
+                            <field name="gender"/>
+                            <field name="experience"/>
+                            <field name="school"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+    </record>
+
+</odoo>

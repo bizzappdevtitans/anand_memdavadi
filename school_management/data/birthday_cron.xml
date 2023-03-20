@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="Bday_Cron_Student" model="ir.cron">
+            <field name="name">Student: Happy Birthday</field>
+            <field name="model_id" ref="model_school_student"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.check_bday()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="WhatsApp_Bday_Cron_Student" model="ir.cron">
+            <field name="name">WhatsApp_Student: Happy Birthday</field>
+            <field name="model_id" ref="model_school_student"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.action_share_whatsapp()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="Bday_Cron_Teacher" model="ir.cron">
+            <field name="name">Teacher: Happy Birthday</field>
+            <field name="model_id" ref="model_school_teacher"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.check_bday()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="Bday_Cron_Principal" model="ir.cron">
+            <field name="name">Principal: Happy Birthday</field>
+            <field name="model_id" ref="model_school_principal"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.check_bday()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="archieve_cancel_admission" model="ir.cron">
+            <field name="name">Admission: Archieved cancel admission</field>
+            <field name="model_id" ref="model_school_admission"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.action_archieved_cancel_admission()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="basic_cron" model="ir.cron">
+            <field name="name">Birthday Wishes in General Channel</field>
+            <field name="model_id" ref="model_school_student"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.message_in_general_channel()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo>
