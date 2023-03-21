@@ -3,6 +3,7 @@ from odoo import models, fields
 
 class StockMove(models.Model):
     _inherit = "stock.move"
+    product_weight = fields.Integer(string="weight in DOL")
 
     def _prepare_procurement_values(self):
         vals = super(StockMove, self)._prepare_procurement_values()

@@ -36,3 +36,27 @@ class StockRule(models.Model):
         )
         po_vals["purchase_des"] = values.get("purchase_des")
         return po_vals
+
+    def _get_stock_move_values(
+        self,
+        product_id,
+        product_qty,
+        product_uom,
+        location_id,
+        name,
+        origin,
+        company_id,
+        values,
+    ):
+        vals = super(StockRule, self)._get_stock_move_values(
+            product_id,
+            product_qty,
+            product_uom,
+            location_id,
+            name,
+            origin,
+            company_id,
+            values,
+        )
+        vals["product_weight"] = values.get("product_weight")
+        return vals

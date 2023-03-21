@@ -18,3 +18,8 @@ class SaleOrderLine(models.Model):
         values = super(SaleOrderLine, self)._timesheet_create_project_prepare_values()
         values["pro_des"] = self.order_id.project_des
         return values
+
+    def _prepare_procurement_values(self, group_id=False):
+        vals = super(SaleOrderLine, self)._prepare_procurement_values(group_id)
+        vals.update({"product_weight": self.product_weight})
+        return vals
