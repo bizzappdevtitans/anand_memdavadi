@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+electronic_management.access_electronic_management,access_electronic_management,electronic_management.model_electronic_management,base.group_user,1,1,1,1
+electronic_management.access_electronic_employee,access_electronic_employee,electronic_management.model_electronic_employee,base.group_user,1,1,1,1
+electronic_management.access_product_brand,access_product_brand,electronic_management.model_product_brand,base.group_user,1,1,1,1
+electronic_management.access_product_service,access_product_service,electronic_management.model_product_service,base.group_user,1,1,1,1

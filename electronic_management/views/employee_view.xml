@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_electronic_management_employee"
+            model="ir.actions.act_window">
+            <field name="name">Employee Details</field>
+            <field name="res_model">electronic.employee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create Employee Record
+                </p>
+            </field>
+    </record>
+
+    <record id="view_electronic_management_tree" model="ir.ui.view">
+            <field name="name">electronic.employee.tree</field>
+            <field name="model">electronic.employee</field>
+            <field name="arch" type="xml">
+                <tree >
+                    <field name="reference_no"/>
+                    <field name="image" widget="image" class="oe_avatar" options="{'size': [300, 200]}"/>
+                    <field name="emp_name"/>
+                    <field name="qualification"/>
+                    <field name="joining_date" widget="remaining_days"/>
+                    <field name="adhaar_no"/>
+                </tree>
+            </field>
+    </record>
+
+    <record id="employee_kanban_view" model="ir.ui.view">
+            <field name="name">Employee Kanban</field>
+            <field name="model">electronic.employee</field>
+            <field name="arch" type="xml">
+                <kanban sample="1">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('electronic.employee', 'image', record.id)" alt="emp_name" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="emp_name"/>
+                                    </strong>
+                                    <ul>
+                                        <li><strong>Price: <field name="qualification"></field></strong></li>
+                                    </ul>
+                                    <div name="tags"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+    <record id="view_electronic_management_form" model="ir.ui.view">
+        <field name="name">electronic.employee.form</field>
+        <field name="model">electronic.employee</field>
+        <field name="arch" type="xml">
+            <form create="0" >
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="get_sales" type="object"
+                            class="oe_stat_button" icon="fa-trophy">
+                            <div class="o_stat_info">
+                                <field name="sale_count" class="o_stat_values"/>
+                                <span class="o_stat_text">Sale</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class = "oe_title">
+                        <h1>
+                            <field name ="reference_no" readonly="1"/>
+                        </h1>
+                    </div>
+                    <widget name="web_ribbon" text="Employee" bg_color="bg-info"/>
+                    <field name="image" widget="image" class="oe_avatar" options="{'size': [300, 200]}"/>
+                    <group>
+                        <field name="emp_name"/>
+                        <field name="dob"/>
+                        <field name="age"/>
+                        <field name="gender" widget="selection"/>
+                        <field name="email" widget="email"/>
+                        <field name="joining_date" widget="remaining_days"/>
+                        <field name="qualification" widget="selection_badge"/>
+                        <field name="contact_no" widget="phone"/>
+                        <field name="adhaar_no"/>
+                        <field name="pan_no"/>
+                        <field name = "user_id"/>
+                    </group>
+                    <group>
+                        <field name="address"/>
+                        <field name="branch"/>
+                        <field name="all_sale_order_count"/>
+                    </group>
+                    <notebook>
+                    <page string="Performance">
+                        <field name="progress" widget="percentpie"/>
+                    </page>
+                </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

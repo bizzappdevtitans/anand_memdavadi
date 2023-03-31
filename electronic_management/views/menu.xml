@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="electronic_management_root"
+        name="Shop"
+        action="action_electronic_management"
+        sequence="0"
+     />
+
+    <menuitem id="electronic_management_product"
+         name="Products"
+         parent="electronic_management_root"
+         groups="group_admin,group_employee"
+         action="stock.product_template_action_product"
+         sequence="3"/>
+
+    <menuitem id="electronic_management_product_brand"
+         name="Product Brands"
+         parent="electronic_management_root"
+         groups="group_admin"
+         action="action_electronic_management_product_brand"
+         sequence="2"/>
+
+    <menuitem id="electronic_management_employee_details"
+        name="Employee Details"
+        groups="group_admin,group_employee"
+        parent="electronic_management_root"
+        sequence="1"/>
+
+    <menuitem id="electronic_management_employee"
+        name="Employees"
+        groups="group_admin,group_employee"
+        parent="electronic_management_employee_details"
+        action="action_electronic_management_employee"
+        sequence="1"/>
+
+    <menuitem id="electronic_management_menu_sale"
+         name="Sale"
+         parent="electronic_management_root"
+         groups="group_admin,group_employee"
+         action="sale.action_quotations_with_onboarding"
+         sequence="4"/>
+
+    <menuitem id="electronic_management_menu_sale_graph"
+         name="Sale Graph"
+         parent="electronic_management_root"
+         groups="group_admin"
+         action="sale.action_order_report_all"
+         sequence="15"/>
+
+     <menuitem id="electronic_management_product_category"
+         name="Products Category"
+         groups="group_admin,group_employee"
+         parent="electronic_management_root"
+         sequence="6"/>
+
+     <menuitem id="electronic_management_product_category_mobile"
+         name="Mobile"
+         parent="electronic_management_product_category"
+         groups="group_admin,group_employee"
+         action="action_category_mobile"
+         sequence="1"/>
+
+     <menuitem id="electronic_management_product_category_tv"
+         name="TV"
+         parent="electronic_management_product_category"
+         groups="group_admin,group_employee"
+         action="action_category_tv"
+         sequence="2"/>
+
+     <menuitem id="electronic_management_product_category_refridgerator"
+         name="Refridgerator"
+         parent="electronic_management_product_category"
+         groups="group_admin,group_employee"
+         action="action_category_refridgerator"
+         sequence="3"/>
+
+     <menuitem id="electronic_management_product_category_washing_machine"
+         name="Washing Machine"
+         parent="electronic_management_product_category"
+         groups="group_admin,group_employee"
+         action="action_category_washing_machine"
+         sequence="4"/>
+
+     <menuitem id="electronic_management_menu_product_service"
+         name="Product Service"
+         parent="electronic_management_root"
+         groups="group_admin,group_employee"
+         action="action_electronic_management_product_service"
+         sequence="13"/>
+</odoo>
