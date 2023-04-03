@@ -18,6 +18,7 @@
     "data": [
         "security/ir.model.access.csv",
         "security/access_rights.xml",
+        "wizard/create_emp_view.xml",
         "data/cron_job.xml",
         "data/data_sequence.xml",
         "data/mail_template.xml",
@@ -30,6 +31,7 @@
         "views/inherited_views.xml",
         "reports/product_service_report.xml",
         "reports/report.xml",
+        "reports/employee_report.xml",
         "views/menu.xml",
 
     ],

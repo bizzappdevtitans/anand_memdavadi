@@ -6,6 +6,8 @@ class SaleOrderLine(models.Model):
 
     categ_id = fields.Many2one("product.category", string="Product Category")
 
+    """Based on Product Category, list of product will be shown"""
+
     @api.onchange("categ_id")
     def onchange_category(self):
         return {

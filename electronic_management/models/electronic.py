@@ -18,6 +18,7 @@ class ElectronicManagement(models.Model):
     sale_count = fields.Integer(compute="compute_sale")
 
     """Used for Sequence Number"""
+
     @api.model
     def create(self, vals):
         if vals.get("branch_no", _("New")) == _("New"):
@@ -28,6 +29,7 @@ class ElectronicManagement(models.Model):
             return res
 
     """Used to Branch name along with branch number"""
+
     def name_get(self):
         branch_list = []
         for rec in self:
@@ -35,6 +37,7 @@ class ElectronicManagement(models.Model):
         return branch_list
 
     """To calculate sale of particular branch"""
+
     def compute_sale(self):
         for record in self:
             record.sale_count = self.env["sale.order"].search_count(
@@ -42,6 +45,7 @@ class ElectronicManagement(models.Model):
             )
 
     """Action for smart button to view Sale Order"""
+
     def get_sales(self):
         self.ensure_one()
         return {

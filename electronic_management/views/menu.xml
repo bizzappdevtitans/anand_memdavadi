@@ -33,6 +33,13 @@
         action="action_electronic_management_employee"
         sequence="1"/>
 
+    <menuitem id="electronic_management_create_employee_wizard"
+        name="Create Employee"
+        groups="group_admin,group_employee"
+        parent="electronic_management_employee_details"
+        action="action_create_emp_wizard"
+        sequence="20"/>
+
     <menuitem id="electronic_management_menu_sale"
          name="Sale"
          parent="electronic_management_root"
@@ -87,4 +94,5 @@
          groups="group_admin,group_employee"
          action="action_electronic_management_product_service"
          sequence="13"/>
+
 </odoo>

@@ -95,7 +95,7 @@
                     <group>
                         <field name="address"/>
                         <field name="branch"/>
-                        <field name="all_sale_order_count"/>
+                        <!-- <field name="all_sale_order_count"/> -->
                     </group>
                     <notebook>
                     <page string="Performance">

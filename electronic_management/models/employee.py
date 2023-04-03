@@ -43,9 +43,12 @@ class Employee(models.Model):
     all_sale_order_count = fields.Integer(compute="_compute_all_sale_order")
     progress = fields.Float(compute="_compute_progress")
     user_id = fields.Many2one("res.users", string="Select User")
-    branch = fields.Many2one("electronic.management", string="Branch", ondelete="cascade")
+    branch = fields.Many2one(
+        "electronic.management", string="Branch", ondelete="cascade"
+    )
 
     """While creating employee add prefix based on gender"""
+
     @api.model
     def create(self, vals):
         if vals.get("reference_no", _("New")) == _("New"):
@@ -61,15 +64,8 @@ class Employee(models.Model):
                 return res
         return res
 
-    # """Used for Sequence Number"""
-    # def check_difference(self):
-    #     today = fields.Date.today()
-    #     for rec in self:
-    #         if rec.dob:
-    #             x = today-rec.dob
-    #             print(x.days, "\n\ndifference\n\n")
-
     """Added name_get to add employee with ref_no and name """
+
     def name_get(self):
         emp_list = []
         for rec in self:
@@ -77,6 +73,7 @@ class Employee(models.Model):
         return emp_list
 
     """Used to compute employee age"""
+
     def _compute_age(self):
         for rec in self:
             today = date.today()
@@ -86,6 +83,7 @@ class Employee(models.Model):
                 rec.age = 0
 
     """Used for cronjob to send message in general on birthday"""
+
     def message_in_general_channel(self):
         today = fields.Date.today()
         today_month = today.strftime("%m")
@@ -105,14 +103,15 @@ class Employee(models.Model):
                 )
 
     """Used to calculate employee sale order"""
+
     def compute_sale_emp(self):
         for record in self:
             record.sale_count = self.env["sale.order"].search_count(
                 [("sale_emp", "=", self.id)]
-
             )
 
     """Added action for smart button to see sale order record"""
+
     def get_sales(self):
         self.ensure_one()
         return {
@@ -125,17 +124,20 @@ class Employee(models.Model):
         }
 
     """Calculates all sale order"""
+
     def _compute_all_sale_order(self):
         for record in self:
             record.all_sale_order_count = self.env["sale.order"].search_count([])
 
     """Progress of employee will be calculated based on sale order created"""
+
     def _compute_progress(self):
         for rec in self:
             rec.progress = 0
             rec.progress = (rec.sale_count / rec.all_sale_order_count) * 100
 
     """Used in cron job to send email on birthday"""
+
     def check_bday_emp(self):
         today = fields.Date.today()
         today_month = today.strftime("%m")
@@ -152,14 +154,24 @@ class Employee(models.Model):
                     template.send_mail(employee.id)
 
     """Added name_search to find employee based on ref_no and adhaar_number"""
+
     @api.model
-    def _name_search(self, emp_name="", args=None, operator="ilike", limit=100, name_get_uid=None):
+    def _name_search(
+        self, emp_name="", args=None, operator="ilike", limit=100, name_get_uid=None
+    ):
         args = list(args or [])
-        if not (emp_name == '' and operator == 'ilike'):
-            args += ['|', '|', (self._rec_name, operator, emp_name), ('reference_no', operator, emp_name), ('adhaar_no', operator, emp_name)]
+        if not (emp_name == "" and operator == "ilike"):
+            args += [
+                "|",
+                "|",
+                (self._rec_name, operator, emp_name),
+                ("reference_no", operator, emp_name),
+                ("adhaar_no", operator, emp_name),
+            ]
         return self._search(args, limit=limit, access_rights_uid=name_get_uid)
 
     """Added ValidationError for phone number to be of 10 digit"""
+
     @api.constrains("contact_no")
     def check_phone(self):
         for rec in self:
@@ -167,6 +179,7 @@ class Employee(models.Model):
                 raise ValidationError(("Phone number should be of 10 digit only"))
 
     """Added validationerror for Adhaar number to be of 12 digit"""
+
     @api.constrains("adhaar_no")
     def check_adhaar(self):
         for rec in self:

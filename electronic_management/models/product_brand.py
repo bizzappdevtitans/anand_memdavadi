@@ -12,11 +12,15 @@ class ProductBrand(models.Model):
     product_details = fields.One2many("product.template", "product_brand")
     brand_sale = fields.Integer("Brand Sale Count", compute="compute_brand_sale")
 
+    """Here brand sale is calculated"""
+
     def compute_brand_sale(self):
         for record in self:
             record.brand_sale = self.env["sale.order.line"].search_count(
                 [("product_template_id.product_brand", "=", self.id)]
             )
+
+    """Here action is given to brand sale's smart button"""
 
     def action_brand_sale(self):
         self.ensure_one()
