@@ -42,6 +42,7 @@ class ProductService(models.Model):
         string="Service Date", default=datetime.today(), readonly=True
     )
     pickup_date = fields.Date(string="Pickup Date")
+    active = fields.Boolean(default=True)
 
     """ Here service available or not is determined """
 

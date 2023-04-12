@@ -16,7 +16,7 @@ class ProductTemplate(models.Model):
     product_brand = fields.Many2one(
         "product.brand", string="PRODUCT BRAND", ondelete="cascade"
     )
-    website = fields.Char(string="Website")
+    website = fields.Char(string="Website for Product Details")
     _sql_constraints = [("unique_tag_name", "unique (name)", "Product already exists")]
 
     """Name get function to append product brand name and product name"""

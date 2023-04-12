@@ -14,6 +14,7 @@
         "base",
         "stock",
         "mail",
+        "contacts"
     ],
     "data": [
         "security/ir.model.access.csv",

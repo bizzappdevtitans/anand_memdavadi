@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, api
 from odoo.exceptions import ValidationError
 from datetime import date
 import datetime
@@ -6,6 +6,17 @@ import datetime
 
 class Partner(models.Model):
     _inherit = "res.partner"
+
+    has_child = fields.Boolean(string="Has Child ?", compute="compute_child")
+    check_true = fields.Boolean(string="True?")
+
+    @api.depends("child_ids")
+    def compute_child(self):
+        for rec in self:
+            if rec.child_ids:
+                rec.has_child = True
+            else:
+                rec.has_child = False
 
     """used for checking Independence day for Cronjob"""
 

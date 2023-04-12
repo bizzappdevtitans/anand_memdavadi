@@ -18,8 +18,19 @@
                 <group>
                     <field name="emp_name"/>
                     <field name="dob"/>
-                    <field name="age"/>
+                    <field name="gender"/>
+                    <field name="email"/>
+                    <field name="joining_date"/>
+                    <field name="contact_no"/>
+                    <field name="adhaar_no"/>
+                    <field name="pan_no"/>
+                    <field name="qualification"/>
+                    <field name="address"/>
                 </group>
+                <footer>
+                    <button name="action_create_employee_record" type="object" string="Create Employee" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
             </form>
         </field>
     </record>

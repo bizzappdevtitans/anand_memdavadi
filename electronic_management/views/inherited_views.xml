@@ -40,6 +40,8 @@
             <xpath expr = "//field[@name='partner_id']" position="after">
                     <field name="branch"/>
                     <field name="sale_emp"/>
+                    <!-- <field name="partner_shipping" context="{'default_type':'invoice'}"
+                        options='{"always_reload": True}'/> -->
             </xpath>
 
             <xpath expr = "//form/sheet/div[@name='button_box']" position="inside">
@@ -90,6 +92,14 @@
             <xpath expr = "//field[@name='name']" position="after">
                     <field name="product_brand" />
             </xpath>
+            <xpath expr = "//notebook" position="inside">
+                <page string="RECENT SALEORDER">
+                    <field name="recent_so"/>
+                </page>
+                <page string="RECENT PURCHASEORDER">
+                    <field name="recent_po"/>
+                </page>
+            </xpath>
         </field>
     </record>
 
@@ -109,6 +119,16 @@
         </field>
     </record>
 
+    <record id="view_contacts_boolean_form" model="ir.ui.view">
+        <field name="name">res.partner.inherited</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="has_child"/>
+                <field name="check_true"/>
+            </field>
+        </field>
+    </record>
 
 </odoo>
-
