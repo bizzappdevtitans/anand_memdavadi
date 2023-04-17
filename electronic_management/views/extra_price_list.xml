@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_extra_price_list"
+            model="ir.actions.act_window">
+            <field name="name">Extra Price List</field>
+            <field name="res_model">extra.pricelist</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create Extra PriceList
+                </p>
+            </field>
+    </record>
+
+    <record id="view_extra_price_list_tree" model="ir.ui.view">
+            <field name="name">extra.pricelist.tree</field>
+            <field name="model">extra.pricelist</field>
+            <field name="arch" type="xml">
+                <tree >
+                    <field name="extra_price_name"/>
+                    <field name="extra_price"/>
+                </tree>
+            </field>
+    </record>
+
+    <record id="view_extra_price_list_form" model="ir.ui.view">
+        <field name="name">extra.pricelist.form</field>
+        <field name="model">extra.pricelist</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="extra_price_name"/>
+                        <field name="extra_price"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_extra_price_list_search" model="ir.ui.view">
+        <field name="name">extra.pricelist.search</field>
+        <field name="model">extra.pricelist</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="extra_price"/>
+                <field name="extra_price_name" string="Extra Price Name" filter_domain="['|',('extra_price_name','ilike',self),('extra_price','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

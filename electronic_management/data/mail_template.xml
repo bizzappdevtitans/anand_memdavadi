@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="Independence_Day_Mail_Template" model="mail.template">
+        <field name="name">Independence_Day_Mail_Template</field>
+        <field name="model_id" ref="electronic_management.model_res_partner"></field>
+        <field name="subject">Independence Day Sale</field>
+        <field name="email_from">{{object.create_uid.email_formatted or ''}}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="body_html">
+            Dear Customer ,
+                On the day of Independence Day , there is Grand Sale for various products.
+                For best deal, purchase soon !!
+                Thank you
+        </field>
+    </record>
+
+    <record id="Republic_Day_Mail_Template" model="mail.template">
+        <field name="name">Republic_Day_Mail_Template</field>
+        <field name="model_id" ref="electronic_management.model_res_partner"></field>
+        <field name="subject">Republic Day Sale</field>
+        <field name="email_from">{{object.create_uid.email_formatted or ''}}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="body_html">
+            Dear Customer ,
+                On the day of Republic Day , there is Grand Sale for various products.
+                For best deal, purchase soon !!
+                Thank you
+        </field>
+    </record>
+
+    <record id="New_Year_Mail_Template" model="mail.template">
+        <field name="name">New_Year_Mail_Template</field>
+        <field name="model_id" ref="electronic_management.model_res_partner"></field>
+        <field name="subject">New Year Sale</field>
+        <field name="email_from">{{object.create_uid.email_formatted or ''}}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="body_html">
+            Dear Customer ,
+                On New Year, there is Grand Sale for various products.
+                For best deal, purchase soon !!
+                Thank you
+        </field>
+    </record>
+
+    <record id="Halloween_Day_Mail_Template" model="mail.template">
+        <field name="name">Halloween_Day_Mail_Template</field>
+        <field name="model_id" ref="electronic_management.model_res_partner"></field>
+        <field name="subject">Halloween Day Sale</field>
+        <field name="email_from">{{object.create_uid.email_formatted or ''}}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="body_html">
+            Dear Customer ,
+                On the day of Halloween Day , there is Grand Sale for various products.
+                For best deal, purchase soon !!
+                Thank you
+        </field>
+    </record>
+
+</odoo>

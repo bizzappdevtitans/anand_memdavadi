@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_product_template_form" model="ir.ui.view">
+        <field name="name">product.template.inherited</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+
+            <field name="name" position="before">
+                    <br/>
+                    <div class="oe_title">
+                        <field name="product_brand"/>
+                    </div>
+            </field>
+
+            <field name="invoice_policy" position="before">
+                <field name="website"/>
+            </field>
+
+            <xpath expr = "//header" position="inside">
+                <button name="action_url"
+                        type="object"
+                        string="Product Details"
+                        class="oe_secondary"
+                        attrs="{'invisible': [('website', '=', False)]}">
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.inherited</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr = "//field[@name='order_line']/tree/field[@name='product_template_id']" position="before">
+                <field name="categ_id"/>
+            </xpath>
+
+            <xpath expr = "//field[@name='partner_id']" position="after">
+                    <field name="branch"/>
+                    <field name="sale_emp"/>
+            </xpath>
+
+            <xpath expr = "//header" position="inside">
+                <button name="action_view_delivery"
+                        id="action_view_delivery"
+                        type="object"
+                        string="Create Delivery"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state', '!=', 'sale')]}">
+                </button>
+            </xpath>
+
+            <xpath expr = "//form/sheet/div[@name='button_box']" position="inside">
+                <button name="whatsapp_invoice"
+                        type="object"
+                        class="oe_stat_button"
+                        states="sale"
+                        icon="fa-whatsapp icon">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_text">WhatsApp</span>
+                            <span class="o_stat_text">Invoice</span>
+                        </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_tree" model="ir.ui.view">
+        <field name="name">sale.order.inherited</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr = "//field[@name='partner_id']" position="after">
+                <field name="sale_emp"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_order_search" model="ir.ui.view">
+        <field name="name">sale.order.inherited</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr = "//search" position="inside">
+                <searchpanel>
+                    <field name="sale_emp" enable_counters="1"
+                        icon="fa fa-user"/>
+                </searchpanel>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_product_form" model="ir.ui.view">
+        <field name="name">product.product.inherited</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr = "//field[@name='name']" position="after">
+                    <field name="product_brand" />
+            </xpath>
+            <xpath expr = "//notebook" position="inside">
+                <page string="RECENT SALEORDER">
+                    <field name="recent_so"/>
+                </page>
+                <page string="RECENT PURCHASEORDER">
+                    <field name="recent_po"/>
+                </page>
+            </xpath>
+            <xpath expr = "//page" position="inside">
+                <field name="extra_price_of_product" />
+            </xpath>
+            <xpath expr = "//field[@name='extra_price_of_product']" position="before">
+                <group>
+                    <field name="total_amount"/>
+                    <field name="total_amount_with_cost"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_product_template_search" model="ir.ui.view">
+        <field name="name">product.template.inherited</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr = "//search" position="inside">
+                <searchpanel>
+                    <field name="product_brand" enable_counters="1"
+                        icon="fa fa-certificate"/>
+                    <field name="categ_id" enable_counters="1"
+                        icon="fa fa-list-ul"/>
+                </searchpanel>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_contacts_boolean_form" model="ir.ui.view">
+        <field name="name">res.partner.inherited</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="has_child"/>
+                <field name="bool_true"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_pruchase_order_inherited_form" model="ir.ui.view">
+        <field name="name">purchase.order.inherited</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr = "//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                <field name="total_amount_with_cost"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

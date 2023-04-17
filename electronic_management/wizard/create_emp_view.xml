@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_create_emp_wizard"
+            model="ir.actions.act_window">
+            <field name="name">Create Employee</field>
+            <field name="res_model">create.emp.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+    </record>
+
+    <record id="view_create_emp_wizard_form" model="ir.ui.view">
+        <field name="name">create.emp.wizard.form</field>
+        <field name="model">create.emp.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="emp_name"/>
+                    <field name="dob"/>
+                    <field name="gender"/>
+                    <field name="email"/>
+                    <field name="joining_date"/>
+                    <field name="contact_no"/>
+                    <field name="adhaar_no"/>
+                    <field name="pan_no"/>
+                    <field name="qualification"/>
+                    <field name="address"/>
+                </group>
+                <footer>
+                    <button name="action_create_employee_record" type="object" string="Create Employee" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

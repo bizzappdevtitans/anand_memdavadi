@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_electronic_management_product_service"
+            model="ir.actions.act_window">
+            <field name="name">Product Service</field>
+            <field name="res_model">product.service</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create Product Service
+                </p>
+            </field>
+    </record>
+
+    <record id="view_electronic_management_product_service_tree" model="ir.ui.view">
+            <field name="name">product.service.tree</field>
+            <field name="model">product.service</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="invoice"/>
+                    <field name="customer_name"/>
+                    <field name="fault"/>
+                    <field name="service_date"/>
+                    <field name="pickup_date"/>
+                    <field name="state" widget="badge"
+                    decoration-success="state == 'available'"
+                    decoration-warning="state == 'unavailable'"/>
+                </tree>
+            </field>
+    </record>
+
+    <record id="view__product_service_form" model="ir.ui.view">
+        <field name="name">product.service.form</field>
+        <field name="model">product.service</field>
+        <field name="arch" type="xml">
+            <form  create="0">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class = "alert alert-info text-center o_form_header" role="alert"
+                    attrs="{'invisible':[('state','=', 'unavailable')]}">
+                    <a class="close" data-dismiss="alert" href="#">x</a>
+                        <div>
+                            <strong>Service Available</strong>
+                        </div>
+                    </div>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="whatsapp_invoice"
+                                type="object"
+                                class="oe_stat_button"
+                                attrs="{'invisible':[('pickup_date','=',False)]}"
+                                icon="fa-whatsapp icon">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">WhatsApp</span>
+                                <span class="o_stat_text">Details</span>
+                            </div>
+                        </button>
+                        <button name="check_difference" type="object"
+                            class="oe_stat_button" icon="fa-wrench">
+                            <span class="o_stat_text">Service Availability?</span>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="invoice"/>
+                        <field name="customer_name"/>
+                        <field name="phone"/>
+                        <field name="invoice_date"/>
+                        <field name="product"/>
+                        <field name="invoice_price"/>
+                    </group>
+                    <notebook attrs="{'invisible':[('state','=', 'unavailable')]}">
+                    <page string='Service Details'>
+                        <group>
+                            <field name="fault"/>
+                            <field name="service_date"/>
+                            <field name="pickup_date"/>
+                        </group>
+                    </page>
+                </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="server_action_to_delete_unavailable_service" model="ir.actions.server">
+          <field name="name">Delete unavailable service record</field>
+          <field name="type">ir.actions.server</field>
+          <field name="model_id" ref="model_product_service"/>
+          <field name="binding_model_id" ref="model_product_service"/>
+          <field name="binding_view_types">list,form</field>
+          <field name="state">code</field>
+          <field name="code">
+              for record in records:
+                if record.state == 'unavailable':
+                    record.action_archieved_unavailable_service()
+          </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_category_mobile"
+            model="ir.actions.act_window">
+            <field name="name">Mobiles</field>
+            <field name="res_model">product.template</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('categ_id','=','Mobile')]</field>
+            <field name="context">{'create': False}</field>
+    </record>
+
+    <record id="action_category_tv"
+            model="ir.actions.act_window">
+            <field name="name">TV</field>
+            <field name="res_model">product.template</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('categ_id','=','TV')]</field>
+            <field name="context">{'create': False}</field>
+    </record>
+
+    <record id="action_category_refridgerator"
+            model="ir.actions.act_window">
+            <field name="name">Refridgerator</field>
+            <field name="res_model">product.template</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('categ_id','=','Refridgerator')]</field>
+            <field name="context">{'create': False}</field>
+    </record>
+
+    <record id="action_category_washing_machine"
+            model="ir.actions.act_window">
+            <field name="name">Washing Machine</field>
+            <field name="res_model">product.template</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('categ_id','=','Washing Machine')]</field>
+            <field name="context">{'create': False}</field>
+    </record>
+
+</odoo>
