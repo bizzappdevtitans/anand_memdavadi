@@ -14,7 +14,9 @@
         "base",
         "stock",
         "mail",
-        "contacts"
+        "contacts",
+        "purchase",
+        "mrp"
     ],
     "data": [
         "security/ir.model.access.csv",
@@ -30,6 +32,7 @@
         "views/product_category_view.xml",
         "views/product_brand_view.xml",
         "views/inherited_views.xml",
+        "views/extra_price_list.xml",
         "reports/product_service_report.xml",
         "reports/report.xml",
         "reports/employee_report.xml",

@@ -95,4 +95,11 @@
          action="action_electronic_management_product_service"
          sequence="13"/>
 
+    <menuitem id="extra_price_list_menu"
+         name="Extra Price List"
+         parent="electronic_management_root"
+         groups="group_admin,group_employee"
+         action="action_extra_price_list"
+         sequence="14"/>
+
 </odoo>

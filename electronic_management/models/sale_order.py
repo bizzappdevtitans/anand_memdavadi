@@ -35,50 +35,22 @@ class SaleOrder(models.Model):
     def onchange_branch(self):
         return {"domain": {"sale_emp": [("branch", "=", self.branch.id)]}}
 
-    # @api.onchange("partner_id")
-    # def onchange_partner(self):
-    #     print("\nOnchange Triggered\n")
-    #     print(self.partner_shipping_id.name)
-    #     p_id = self.partner_shipping_id.filtered(lambda la: la.check_true == True)
-    #     print(p_id.id)
-    #     return p_id
-
-        # for rec in self:
-        #     partner = self.env["res.partner"].search(
-        #         [("type", "=", "delivery"), ("check_true", "=", True)]
-        #     )
-        #     partner_shipping_id = partner.filtered(lambda l: l.check_true == True)
-        #     print(partner_shipping_id)
-        #     return partner_shipping_id
-
-    # for rec in self:
-    #     partner_shipping_id = rec.partner_shipping_id.filtered(
-    #         lambda la: la.check_true == 'True' and la.type == 'delivery'
-    #     )
+    """ When partner id has child ids and if they have boolean-True and type delivery
+    than returns in partner_delivery_id in Sale Order, if doesn't exist than return other type """
 
     @api.onchange("partner_id")
-    def onchange_partners(self):
-        print("Onchange Triggered")
-        for rec in self:
-            return {
-                "domain": {
-                    "partner_shipping_id": [
-                        ("type", "=", "delivery"),
-                        ("check_true", "=", True),
-                        ("id", "in", rec.partner_id.child_ids.ids),
-                    ],
-                }
-            }
+    def onchange_partner_id(self):
+        vals = super(SaleOrder, self).onchange_partner_id()
+        delivery_type_id = self.partner_id.child_ids.filtered(
+            lambda la: la.bool_true == True and la.type == "delivery"
+        )
+        self.partner_shipping_id = delivery_type_id[:1]
+        if not delivery_type_id:
+            other_type_id = self.partner_id.child_ids.filtered(
+                lambda la: la.type == "other"
+            )
+            self.partner_shipping_id = other_type_id[:1]
+        return vals
 
-    # @api.model
-    # def create(self, vals):
-    #     partner = self.env["res.partner"].search(
-    #         [
-    #             ("type", "=", "delivery"),
-    #             ("check_true", "=", True),
-    #             ("id", "in", self.partner_id.child_ids.ids),
-    #         ]
-    #     )
-    #     vals['partner_shipping_id'] = vals.setdefault('partner_shipping_id', partner)
-    #     result = super(SaleOrder, self).create(vals)
-    #     return result
+    def _action_confirm(self):
+        return

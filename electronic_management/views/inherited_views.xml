@@ -33,6 +33,7 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+
             <xpath expr = "//field[@name='order_line']/tree/field[@name='product_template_id']" position="before">
                 <field name="categ_id"/>
             </xpath>
@@ -40,8 +41,16 @@
             <xpath expr = "//field[@name='partner_id']" position="after">
                     <field name="branch"/>
                     <field name="sale_emp"/>
-                    <!-- <field name="partner_shipping" context="{'default_type':'invoice'}"
-                        options='{"always_reload": True}'/> -->
+            </xpath>
+
+            <xpath expr = "//header" position="inside">
+                <button name="action_view_delivery"
+                        id="action_view_delivery"
+                        type="object"
+                        string="Create Delivery"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state', '!=', 'sale')]}">
+                </button>
             </xpath>
 
             <xpath expr = "//form/sheet/div[@name='button_box']" position="inside">
@@ -100,6 +109,16 @@
                     <field name="recent_po"/>
                 </page>
             </xpath>
+            <xpath expr = "//page" position="inside">
+                <field name="extra_price_of_product" />
+            </xpath>
+            <xpath expr = "//field[@name='extra_price_of_product']" position="before">
+                <group>
+                    <field name="total_amount"/>
+                    <field name="total_amount_with_cost"/>
+                </group>
+            </xpath>
+
         </field>
     </record>
 
@@ -126,8 +145,19 @@
         <field name="arch" type="xml">
             <field name="vat" position="after">
                 <field name="has_child"/>
-                <field name="check_true"/>
+                <field name="bool_true"/>
             </field>
+        </field>
+    </record>
+
+    <record id="view_pruchase_order_inherited_form" model="ir.ui.view">
+        <field name="name">purchase.order.inherited</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr = "//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                <field name="total_amount_with_cost"/>
+            </xpath>
         </field>
     </record>
 

@@ -7,3 +7,5 @@ from . import res_partner
 from . import product_product
 from . import sale_order_line
 from . import product_service
+from . import extra_price_list
+from . import purchase_order_line

@@ -49,7 +49,16 @@
                     <field name="branch_name"/>
                     <field name="branch_address"/>
                     </group>
-                    <field name="emp" widget="one2many_tags"/>
+                    <group>
+                        <field name="emp">
+                            <tree>
+                                <field name="emp_name"/>
+                                <field name="age"/>
+                                <field name="email"/>
+                                <field name="address"/>
+                            </tree>
+                    </field>
+                    </group>
                 </sheet>
             </form>
         </field>
